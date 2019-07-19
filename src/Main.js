@@ -1,13 +1,19 @@
-import './Main.css';
 import React from 'react'
-import Live from './Live.js'
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Home from './Home.js'
 
 function Main() {
   return (
-    <div className="Main">
-	<Live />
-    </div>
+		<>
+			<Router>
+				<Route path="/" exact component={Home} />
+	  			<Route path="/git" exact component={() => {
+					window.location.href = "https://git.nrichman.dev";
+					return null;
+				}}/>
+			</Router>
+		</>
   );
 }
 

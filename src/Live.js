@@ -23,15 +23,19 @@ class Live extends React.Component {
 		left: "0",
 		top: "0",
 		width:"100%",
-		height: "100%",
+		height: "50%",
 		filter: "blur(5px)"
 	}
 		return (
+
 		<Container fluid>
 			<Row>
 		<div id="bg-image" style={img_props}></div>
 				<Col md={2}>
-					<h3 style={{"color":"white"}}>{this.state.curTime.toLocaleTimeString([],{month: 'long', day: 'numeric', year: 'numeric',hour: '2-digit',minute: '2-digit'})}</h3>
+					<div style={{'display':'block'}}>
+						<h3 style={{"color":"white"}}>{new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric',year:'numeric'}).format(this.state.curTime)}</h3>
+						<h4 style={{"color":"white"}}>{new Intl.DateTimeFormat('en-US', { hour: '2-digit',minute: '2-digit', timeZoneName: 'short'}).format(this.state.curTime)}</h4>
+					</div>
 				</Col>
 					<Col md={{ span: 2, offset: 8 }}>
 						<p style={{"color":"white"}}>Hello2</p>
@@ -43,6 +47,7 @@ class Live extends React.Component {
 			</Col>
 			</Row>
 		</Container>
+	
 		)
 	}
 	
