@@ -10,7 +10,7 @@ function Home() {
 	<Live />
 	<div style={{position:'fixed', backgroundAttachment: 'scroll', top:'50%', width:'100%', backgroundColor: 'rgb(100,100,100)'}}>
 	 <MainNav />
-	<div style={{position:'fixed', backgroundAttachment: 'scroll',backgroundColor:'rgb(220,220,220)', top:'50%', left:'10%', width:'80%'}}>
+	<div style={{position:'fixed', backgroundAttachment: 'scroll',backgroundColor:'rgb(220,220,220)', left:'15%', width:'70%'}}>
 	  <p> Name is nate richman </p>
 	  </div>
 	  </div>

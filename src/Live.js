@@ -18,13 +18,13 @@ class Live extends React.Component {
 		backgroundAttachment: "fixed",
 		backgroundRepeat: "no-repeat",
 		backgroundPosition: "center",
-		backgroundImage: "url(https://archive-media-1.nyafuu.org/wg/image/1493/00/1493008779677.png)",
+		backgroundImage: "url(/resources/images)",
 		position: "fixed",
 		left: "0",
 		top: "0",
 		width:"100%",
 		height: "50%",
-		filter: "blur(5px)"
+		filter: "blur(7px)"
 	}
 		return (
 
@@ -43,13 +43,13 @@ class Live extends React.Component {
 			</Row>
 			<Row>
 				<Col md={{span:2, offset:5}}>
-					<h3>Nate Richman</h3>
+					<h3 style={{backgroundColor: '#282c34', padding:'15px', border: '5px solid', borderColor:'rgb(220,220,220)', textAlign: 'center'}}>Nate Richman</h3>
 			</Col>
 			</Row>
 		</Container>
-	
+
 		)
 	}
-	
+
 }
 export default Live
