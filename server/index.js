@@ -35,5 +35,14 @@ app.get('/resources*', (req, res) => {
   }
 });
 
+app.post('/resources*', (req, res) => {
+  let latitude = encodeURIComponent(req.body.latitude);
+  let longitude = encodeURIComponent(req.body.longitude);
+  let units = decodeURIComponent(req.body.units);
+
+//  let url = `https://api.darksky.net/forecast/${config.weather_key}/${latitude},${longitude}?units=${units}`
+//  https.get(url, (err, res, body))
+});
+
 
 app.listen(3000, () => console.log("Running on port 3000"));
