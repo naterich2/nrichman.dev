@@ -24,7 +24,7 @@ class Live extends React.Component {
 		top: "0",
 		width:"100%",
 		height: "50%",
-		filter: "blur(7px)"
+		filter: "blur(7px) brightness(60%)"
 	}
 		return (
 
@@ -43,7 +43,7 @@ class Live extends React.Component {
 			</Row>
 			<Row>
 				<Col md={{span:2, offset:5}}>
-					<h3 style={{backgroundColor: '#282c34', padding:'15px', border: '5px solid', borderColor:'rgb(220,220,220)', textAlign: 'center'}}>Nate Richman</h3>
+					<h3 style={{padding:'15px', border: '3px solid', borderColor:'rgb(220,220,220)', textAlign: 'center', color: 'rgb(220,220,220)'}}>Nate Richman</h3>
 			</Col>
 			</Row>
 		</Container>
