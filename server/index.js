@@ -12,13 +12,6 @@ function log(message){
 let app = express()
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.get('/', (req, res) => {
-  const dir = path.resolve(path.join(__dirname, '../public'));
-  res.sendFile('index.html', {root: dir}, (err) => {
-    res.end();
-    if(err) throw(err);
-  });
-});
 
 app.get('/resources*', (req, res) => {
   //Request for random image from pictures dir
@@ -68,6 +61,13 @@ app.post('/resources*', (req, res) => {
      weather.icon = icons[data.currently.icon];
      res.json(weather);
   });
+app.get('/*', (req, res) => {
+  const dir = path.resolve(path.join(__dirname, '../public'));
+  res.sendFile('index.html', {root: dir}, (err) => {
+    res.end();
+    if(err) throw(err);
+  });
+});
 });
 
 
