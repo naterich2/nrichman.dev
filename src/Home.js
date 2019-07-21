@@ -9,10 +9,10 @@ function Home() {
   return (
     <div className="home">
 	    <Live />
-	    <div style={{position:'fixed', backgroundAttachment: 'scroll', top:'50%', width:'100%', backgroundColor: 'rgb(100,100,100)'}}>
+	    <div style={{position:'relative', backgroundAttachment: 'scroll', top:'50%', width:'100%', backgroundColor: '#282c35'}}>
 	      <MainNav />
-        <Jumbotron style={{backgroundAttachment: 'scroll', position: 'fixed', left: '15%', width:'70%'}}>
-          <Container style={{width:'50%'}}>
+        <Jumbotron style={{backgroundAttachment: 'scroll', position: 'relative', left: '15%', width:'70%'}}>
+          <Container style={{width:'40%'}}>
             <Row>
               <h3>About Me</h3>
               <p>Hey I'm Nate!  I'm a Masters student UW-Madison in Biomedical Engineering.  I did my undergrad in Biomedical Engineering and minored in Comp. Sci., Biology in Engineering, and Honors, research-based biology.</p>
