@@ -4,7 +4,7 @@
   "description": "nrichman.dev website",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/webpack --mode development",
+    "build-dev": "./node_modules/.bin/webpack --mode development",
     "start": "nodemon --exec ./node_modules/.bin/babel-node server/index.js"
   },
   "author": "Nate Richman",
