@@ -40,8 +40,34 @@ app.post('/resources*', (req, res) => {
   let longitude = encodeURIComponent(req.body.longitude);
   let units = decodeURIComponent(req.body.units);
 
-//  let url = `https://api.darksky.net/forecast/${config.weather_key}/${latitude},${longitude}?units=${units}`
-//  https.get(url, (err, res, body))
+  let url = `https://api.darksky.net/forecast/${config.weather_key}/${latitude},${longitude}?units=${units}`
+  https.get(url, (err, res, body) => {
+    let weather = {}
+    let data = JSON.parse(body)
+
+    //https://github.com/JasonPuglisi/descent/blob/master/server.js
+    let icons = {
+      'clear-day': 'day-sunny',
+      'clear-night': 'night-clear',
+      'rain': 'rain',
+      'snow': 'snow',
+      'sleet': 'sleet',
+      'wind': 'cloudy-gusts',
+      'fog': 'fog',
+      'cloudy': 'cloudy',
+      'partly-cloudy-day': 'day-cloudy',
+      'partly-cloudy-night': 'night-alt-cloudy',
+      'hail': 'hail',
+      'thunderstorm': 'thunderstorm',
+      'tornado': 'tornado'
+     };
+
+     weather.summary = data.minutely.summary;
+     weather.temp = data.currently.temperature;
+     weather.unit = units === 'us' ? 'F' : 'C';
+     weather.icon = icons[data.currently.icon];
+     res.json(weather);
+  });
 });
 
 
