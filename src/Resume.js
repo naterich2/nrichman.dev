@@ -3,6 +3,7 @@ import { Jumbotron,Container,Row,Col,Image } from 'react-bootstrap';
 import React from 'react'
 import Live from './Live.js'
 import MainNav from './MainNav.js'
+import Footer from './Footer.js'
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css'
 
 function Resume() {
@@ -153,6 +154,7 @@ function Resume() {
             </div>
           </Container>
         </Jumbotron>
+        <Footer />
 	    </div>
     </div>
   );
