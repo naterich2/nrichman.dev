@@ -1,5 +1,6 @@
 const config = {
-  pictures: '/pictures_dir'
+  pictures: '/pictures_dir',
+  blog: ''
 }
 
 module.exports = config;

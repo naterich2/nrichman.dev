@@ -12,6 +12,7 @@ function log(message){
 let app = express()
 app.use(express.static(path.join(__dirname, '../public')));
 
+
 app.get('/', (req, res) => {
   const dir = path.resolve(path.join(__dirname, '../public'));
   res.sendFile('index.html', {root: dir}, (err) => {
@@ -38,6 +39,14 @@ app.get('/resources*', (req, res) => {
       console.log(req.headers)
       log(`New request for picture from ${req.headers['user-agent']}, sending file ${file}`);
       res.sendFile(path.join(pictures,file));
+    });
+  } else if(req.url == '/resources/blog_list'){
+    log('Request for blog_list')
+    const blog_location = path.join(__dirname,config.blog);
+    let blog_list = fs.readdir(blog_location, (err, files)=>{
+      let toSend = {blogs: files}
+      res.setHeader('Content-Type', 'application/json');
+      res.json(toSend);
     });
   }
 });
