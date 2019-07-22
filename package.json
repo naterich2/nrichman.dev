@@ -2,10 +2,10 @@
   "name": "nrichman.dev",
   "version": "1.0.0",
   "description": "nrichman.dev website",
-  "main": "index.js",
+  "main": "private/index.js",
   "scripts": {
     "build-dev": "./node_modules/.bin/webpack --mode development",
-    "start": "nodemon --exec ./node_modules/.bin/babel-node server/index.js"
+    "start": "nodemon --exec ./node_modules/.bin/babel-node private/index.js"
   },
   "author": "Nate Richman",
   "license": "ISC",
