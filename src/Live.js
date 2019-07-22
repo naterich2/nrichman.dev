@@ -23,7 +23,7 @@ class Live extends React.Component {
       left: "0",
       top: "0",
       width:"100%",
-      height: "50%",
+      height: "60%",
       filter: "blur(7px) brightness(60%)"
     }
 		return (
