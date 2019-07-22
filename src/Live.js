@@ -23,8 +23,8 @@ class Live extends React.Component {
       left: "0",
       top: "0",
       width:"100%",
-      height: "60%",
-      filter: "blur(7px) brightness(60%)"
+      height: "70%",
+      filter: "blur(5px) brightness(70%)"
     }
 		return (
 
@@ -38,9 +38,9 @@ class Live extends React.Component {
 					</div>
 				</Col>
 			</Row>
-			<Row>
+			<Row style={{position: 'absolute', bottom:'50%', width:'100%'}}>
 				<Col md={{span:2, offset:5}}>
-					<h3 style={{padding:'15px', border: '3px solid', borderColor:'rgb(220,220,220)', textAlign: 'center', color: 'rgb(220,220,220)'}}>Nate Richman</h3>
+					<h3 style={{position:'relative', top: '50%',padding:'15px', border: '3px solid', borderColor:'rgb(220,220,220)', textAlign: 'center', color: 'rgb(220,220,220)'}}>Nate Richman</h3>
 			</Col>
 			</Row>
 		</Container>
