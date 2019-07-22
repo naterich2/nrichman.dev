@@ -3,13 +3,14 @@ import { Jumbotron,Container,Row,Col } from 'react-bootstrap';
 import React from 'react'
 import Live from './Live.js'
 import MainNav from './MainNav.js'
+import Footer from './Footer.js'
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css'
 
 function Home() {
   return (
     <div className="home">
 	    <Live />
-	    <div style={{position:'relative', backgroundAttachment: 'scroll', top:'50%', width:'100%', backgroundColor: '#282c35'}}>
+	    <div style={{position:'absolute', backgroundAttachment: 'scroll', top:'60%', width:'100%', backgroundColor: '#282c35'}}>
 	      <MainNav />
         <Jumbotron style={{backgroundAttachment: 'scroll', position: 'relative', left: '15%', width:'70%'}}>
           <Container style={{width:'40%'}}>
@@ -21,6 +22,7 @@ function Home() {
             </Row>
           </Container>
         </Jumbotron>
+        <Footer />
 	    </div>
     </div>
   );

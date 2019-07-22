@@ -15,6 +15,12 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.footer h5 {
+  color: rgb(220,220,220);
+}
+.footer p {
+  color: rgb(220,220,220);
+}
 body{
   height:100%;
   margin: 0;

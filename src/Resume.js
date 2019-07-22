@@ -127,7 +127,7 @@ function Resume() {
               </Row>
             </div>
             <Row>
-                <Col md={{span: 4}}>
+                <Col md={{span: 5}}>
                   <h4><b>Engineering Experience</b></h4>
                 </Col>
                 <hr width="100%"/>
@@ -147,7 +147,7 @@ function Resume() {
                   <p>Proposed and conducted my own research on a novel question about Bacterial Biofilms for the
               Hilldale Undergraduate Research Fellowship.  Gained experience with research and design of methods,
               mechanical testing of samples using a Malvern Rheometer, MTS testing system, Hysitron nano/triboindenter,
-              AFM (atomic force microscopy), and mathematical and statistical analysis of data</p>
+              AFM (atomic force microscopy), mathematical model fitting, and statistical analysis of data</p>
                 </Col>
               </Row>
             </div>
