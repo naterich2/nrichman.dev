@@ -1,6 +1,20 @@
 .Main {
   text-align: center;
 }
+.resume p {
+  padding: 0px;
+  margin: 0px;
+}
+.date {
+  text-align: right;
+}
+.resume h4 {
+  margin-top: 10px;
+}
+.resume hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 body{
   height:100%;
   margin: 0;
