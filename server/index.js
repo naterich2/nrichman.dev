@@ -12,6 +12,20 @@ function log(message){
 let app = express()
 app.use(express.static(path.join(__dirname, '../public')));
 
+app.get('/', (req, res) => {
+  const dir = path.resolve(path.join(__dirname, '../public'));
+  res.sendFile('index.html', {root: dir}, (err) => {
+    res.end();
+    if(err) throw(err);
+  });
+});
+app.get('/resume', (req, res) => {
+  const dir = path.resolve(path.join(__dirname, '../public'));
+  res.sendFile('index.html', {root: dir}, (err) => {
+    res.end();
+    if(err) throw(err);
+  });
+});
 
 app.get('/resources*', (req, res) => {
   //Request for random image from pictures dir
@@ -33,7 +47,7 @@ app.post('/resources*', (req, res) => {
   let longitude = encodeURIComponent(req.body.longitude);
   let units = decodeURIComponent(req.body.units);
 
-  let url = `https://api.darksky.net/forecast/${config.weather_key}/${latitude},${longitude}?units=${units}`
+  let url = "https://api.darksky.net/forecast/"+config.weather_key+"/"+latitude+","+longitude+"?units="+units;
   https.get(url, (err, res, body) => {
     let weather = {}
     let data = JSON.parse(body)
@@ -61,13 +75,6 @@ app.post('/resources*', (req, res) => {
      weather.icon = icons[data.currently.icon];
      res.json(weather);
   });
-app.get('/*', (req, res) => {
-  const dir = path.resolve(path.join(__dirname, '../public'));
-  res.sendFile('index.html', {root: dir}, (err) => {
-    res.end();
-    if(err) throw(err);
-  });
-});
 });
 
 
