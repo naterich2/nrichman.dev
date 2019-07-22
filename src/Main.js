@@ -9,11 +9,7 @@ function Main() {
 		<>
 			<Router>
 				<Route path="/" exact component={Home} />
-	  			<Route path="/git" exact component={() => {
-					window.location.href = "https://git.nrichman.dev";
-					return null;
-				}}/>
-          <Route path="/resume" component={Resume} />
+        <Route path="/resume" component={Resume} />
 			</Router>
 		</>
   );
