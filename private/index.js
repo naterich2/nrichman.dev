@@ -29,7 +29,7 @@ app.get('/resources/blog/:id', (req, res) => {
     host: '127.0.0.1',
     user: 'mysql',
     password: config.mariadb_password,
-    database: 'blog'
+    database: 'blog',
     port: 3306
   });
   connection.query("SELECT * FROM blogs WHERE id = "+req.params.id+";", (err, rows) => {
@@ -43,7 +43,7 @@ app.get('/resources/blog/recent', (req, res) => {
     host: '127.0.0.1',
     user: 'mysql',
     password: config.mariadb_password,
-    database: 'blog'
+    database: 'blog',
     port: 3306
   });
   connection.query("SELECT * FROM blogs ORDER BY ts LIMIT 10;", (err, rows) => {
@@ -57,7 +57,7 @@ app.get('/resources/blog/tag/:tag', (req,res)=>{
     host: '127.0.0.1',
     user: 'mysql',
     password: config.mariadb_password,
-    database: 'blog'
+    database: 'blog',
     port: 3306
   });
   connection.query("SELECT * FROM blogs WHERE tags LIKE \'"+req.params.tag+"\';", (err, rows) => {
