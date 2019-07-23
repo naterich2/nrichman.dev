@@ -26,7 +26,7 @@ var addBlog = (title, author, storage, synopsis, beginning, tags) => {
   fs.readFile(storage, (err,data) => {
     if(err) console.log(err);
     console.log("File Exists")
-    connection.query(`INSERT INTO blogs (title,author,storage_path,synopsis,beginning,tags, full_text)
+    connection.query(`INSERT INTO posts (title,author,storage_path,synopsis,beginning,tags, full_text)
                       VALUES('${title}','${author}','${storage}','${synopsis}','${beginning}','${tags}','${data}')`, (err, rows) => {
       if(err) console.log(err);
       console.log(rows);

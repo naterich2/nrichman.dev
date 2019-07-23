@@ -49,8 +49,7 @@ app.get('/resources/blog/recent', (req, res) => {
     port: '3306'
   })
     .then(conn => {
-      console.log("test")
-      conn.query("SELECT * FROM blogs ORDER BY ts LIMIT 10")
+      conn.query("SELECT * FROM posts ORDER BY ts LIMIT 10")
       .then(rows => {
         res.setHeader('Content-Type', 'application/json');
         console.log(rows);
@@ -65,6 +64,39 @@ app.get('/resources/blog/recent', (req, res) => {
     .catch(err => {
       log(err);
     });
+});
+app.get('/resources/blog/blog_info', (req,res) => {
+  maria.createConnection({
+    host: '172.17.0.1',
+    user: 'mysql',
+    database: 'blog',
+    password: config.mariadb_password,
+    port: '3306'
+  })
+    .then(conn => {
+      console.log("test")
+      conn.query("SELECT name FROM authors;")
+      .then((rows1, meta1) => {
+        conn.query("SELECT name FROM tags")
+          .then((rows2, meta2) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.json([rows1[0],rows2[0]]);
+            //res.json(rows) ??
+            //res.json(rows);
+            conn.end();
+          })
+          .catch(err => {
+            log(err);
+          })
+      })
+      .catch(err => {
+        log(err);
+      });
+    })
+    .catch(err => {
+      log(err);
+    });
+
 });
 
 app.get('/resources/blog/tag/:tag', (req,res)=>{
