@@ -5,8 +5,9 @@ CREATE TABLE blogs (
   title TEXT NOT NULL,
   author VARCHAR(30) NOT NULL,
   storage_path TEXT NOT NULL,
-  synopsis TEXT NOT NULL,
-  beginning TEXT NOT NULL,
+  synopsis TEXT,
+  beginning TEXT,
+  full_text LONGTEXT NOT NULL,
   tags TEXT NOT NULL
   ts TIMESTAMP
 );

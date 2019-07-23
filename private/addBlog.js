@@ -26,13 +26,12 @@ var addBlog = (title, author, storage, synopsis, beginning, tags) => {
   fs.readFile(storage, (err,data) => {
     if(err) console.log(err);
     console.log("File Exists")
-    connection.query(`INSERT INTO blogs (title,author,storage_path,synopsis,beginning,tags)
-                      VALUES('${title}','${author}','${storage}','${synopsis}','${beginning}','${tags}')`, (err, rows) => {
+    connection.query(`INSERT INTO blogs (title,author,storage_path,synopsis,beginning,tags, full_text)
+                      VALUES('${title}','${author}','${storage}','${synopsis}','${beginning}','${tags}','${data}')`, (err, rows) => {
       if(err) console.log(err);
       console.log(rows);
       connection.end();
     });
   });
 }
-console.log(process.argv);
 addBlog(process.argv[2],process.argv[3],process.argv[4],process.argv[5],process.argv[6],process.argv[7]);
