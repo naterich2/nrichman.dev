@@ -3,3 +3,4 @@ package-lock.json
 public/bundle.js
 private/pictures
 private/config.js
+mysql.sh

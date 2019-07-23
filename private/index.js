@@ -3,7 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const config = require('./config.js');
 const mime = require('mime');
-const maria = require('mariadb/callback');
+//const maria = require('mariadb');
+const maria = require('mariadb');
 
 function log(message){
   console.log(new Date().toLocaleTimeString({month: 'short', day: 'numeric',
@@ -24,7 +25,7 @@ function log(message){
 
 let app = express()
 app.use(express.static(path.join(__dirname, '../public')));
-app.get('/resources/blog/:id', (req, res) => {
+app.get('/resources/blog/blog_id/:id', (req, res) => {
   var connection = maria.createConnection({
     host: '127.0.0.1',
     user: 'mysql',
@@ -38,20 +39,34 @@ app.get('/resources/blog/:id', (req, res) => {
     connection.end();
   });
 });
+
 app.get('/resources/blog/recent', (req, res) => {
-  var connection = maria.createConnection({
-    host: '127.0.0.1',
+  maria.createConnection({
+    host: '172.17.0.1',
     user: 'mysql',
-    password: config.mariadb_password,
     database: 'blog',
-    port: 3306
-  });
-  connection.query("SELECT * FROM blogs ORDER BY ts LIMIT 10;", (err, rows) => {
-    console.log(rows);
-    //res.json(rows) ??
-    connection.end();
-  });
+    password: config.mariadb_password,
+    port: '3306'
+  })
+    .then(conn => {
+      console.log("test")
+      conn.query("SELECT * FROM blogs ORDER BY ts LIMIT 10")
+      .then(rows => {
+        res.setHeader('Content-Type', 'application/json');
+        console.log(rows);
+        //res.json(rows) ??
+        res.json(rows);
+        conn.end();
+      })
+      .catch(err => {
+        log(err);
+      });
+    })
+    .catch(err => {
+      log(err);
+    });
 });
+
 app.get('/resources/blog/tag/:tag', (req,res)=>{
   var connection = maria.createConnection({
     host: '127.0.0.1',
