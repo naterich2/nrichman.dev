@@ -95,6 +95,14 @@ app.get('/resume', (req, res) => {
     if(err) throw(err);
   });
 });
+app.get('/blog*', (req,res) => {
+  const dir = path.resolve(path.join(__dirname, '../public'));
+  res.sendFile('index.html', {root: dir}, (err) => {
+    res.end();
+    if(err) throw(err);
+  });
+})
+
 app.get('/resources/images', (req, res) => {
   //Request for random image from pictures dir
   const pictures = path.join(__dirname,config.pictures);
