@@ -1,13 +1,20 @@
-import {Navbar, Nav, NavDropdown} from 'react-bootstrap'
+import {Navbar, Nav, NavDropdown, Button} from 'react-bootstrap'
 import React from 'react'
 import { withRouter } from "react-router"
+import Login from './Login.js'
 
 class MainNav extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      showModal: false,
+    }
+  }
 //	const handleDropdownSelect = eventKey => {
 //
 //	};
 	render(){
-
+    const close = () => this.setState({showModal: false});
 		return (
 			<>
 				<Navbar bg="dark" variant="dark">
@@ -23,8 +30,10 @@ class MainNav extends React.Component {
 							<NavDropdown.Item eventKey="deezloader" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.197:1730"}>Deezloader</NavDropdown.Item>
 							<NavDropdown.Item eventKey="soulseek" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.197:6080"}>Soulseek</NavDropdown.Item>
 						</NavDropdown>
+            <Button variant="link" style={{position: 'absolute', right:'5%'}} onClick={() => this.setState({showModal: true})}>Login</Button>
 					</Nav>
 				</Navbar>
+        <Login show={this.state.showModal} onClose={close.bind(this)} />
 			</>
 		)
 	}
