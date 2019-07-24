@@ -17,6 +17,7 @@ CREATE TABLE authors (
   ID INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(30) NOT NULL,
   email VARCHAR(30) NOT NULL,
+  password TEXT NOT NULL,
   PRIMARY KEY(ID)
 );
 
@@ -31,3 +32,4 @@ CREATE TABLE comments (
 CREATE TABLE tags (
   name VARCHAR(30) NOT NULL
 );
+
