@@ -3,26 +3,14 @@ const path = require('path');
 const fs = require('fs');
 const config = require('./config.js');
 const mime = require('mime');
-//const maria = require('mariadb');
 const maria = require('mariadb');
+//const jwt = require('jsonwebtoken');
+//const bcrypt = require('bcrypt');
 
 function log(message){
   console.log(new Date().toLocaleTimeString({month: 'short', day: 'numeric',
     year: 'numeric', hour: '2-digit', minute:'2-digit', second: '2-digit'})+': '+message);
 }
-
-//var connection = maria.createConnection({
-//  host: '127.0.0.1',
-//  user: 'mysql',
-//  password: config.mariadb_password
-//  port: 3306
-//});
-//connection.query("SELECT * from table", (err, rows) => {
-//  console.log(rows);
-//  connection.end();
-//});
-
-
 let app = express()
 app.use(express.static(path.join(__dirname, '../public')));
 app.get('/resources/blog/blog_id/:id', (req, res) => {
@@ -49,7 +37,7 @@ app.get('/resources/blog/recent', (req, res) => {
     port: '3306'
   })
     .then(conn => {
-      conn.query("SELECT * FROM posts ORDER BY ts LIMIT 10")
+      conn.query("SELECT * FROM posts ORDER BY ts LIMIT 5")
       .then(rows => {
         res.setHeader('Content-Type', 'application/json');
         console.log(rows);
@@ -181,6 +169,29 @@ app.post('/resources*', (req, res) => {
      res.json(weather);
   });
 });
+/*app.post('/login', (req,res) =>{
+  let username = req.body.username;
+  bcrypt.hash(req.body.password, 10, (err, hashedPass) => {
+    if(err){
+      log(err);
+    }
+    else {
+      var connection = maria.createConnection({
+        host: '127.0.0.1',
+        user: 'mysql',
+        password: config.mariadb_password,
+        database: 'blog',
+        port: 3306
+      });
+      connection.query("SELECT password FROM authors WHERE email=\'"+username+"\';", (err, rows) => {
+        console.log(rows);
+
+        connection.end();
+      });
+    }
+  });
+});*/
+
 
 
 app.listen(3000, () => console.log("Running on port 3000"));
