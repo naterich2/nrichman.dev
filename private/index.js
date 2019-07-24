@@ -185,12 +185,15 @@ app.post('/login', (req,res) =>{
     .then(conn => {
       conn.query("SELECT password FROM authors WHERE email=\'"+username+"\';")
         .then(rows => {
-          bcrypt.compare(req.body.password, rows[0].password, (err, res) => {
+          console.log("here")
+          bcrypt.compare(req.body.password, rows[0].password, (err, equal) => {
+            console.log("entered")
             if(err){
               log(err);
               res.sendStatus(500);
               conn.end();
-            } else {
+            } else if(equal) {
+              console.log(equal);
               jwt.sign({author: username}, config.secret, {expiresIn:"1h"}, (err, token) => {
                 if(err){
                   log(err)
@@ -202,6 +205,8 @@ app.post('/login', (req,res) =>{
                   conn.end();
                 }
               })
+            } else {
+              res.sendStatus(403);
             }
           })
         })
