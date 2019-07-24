@@ -4,8 +4,9 @@ const fs = require('fs');
 const config = require('./config.js');
 const mime = require('mime');
 const maria = require('mariadb');
-//const jwt = require('jsonwebtoken');
-//const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const bp = require('body-parser');
 
 function log(message){
   console.log(new Date().toLocaleTimeString({month: 'short', day: 'numeric',
@@ -13,6 +14,8 @@ function log(message){
 }
 let app = express()
 app.use(express.static(path.join(__dirname, '../public')));
+app.use(bp.urlencoded({extended: false}));
+app.use(bp.json())
 app.get('/resources/blog/blog_id/:id', (req, res) => {
   var connection = maria.createConnection({
     host: '127.0.0.1',
@@ -169,28 +172,22 @@ app.post('/resources*', (req, res) => {
      res.json(weather);
   });
 });
-/*app.post('/login', (req,res) =>{
-  let username = req.body.username;
-  bcrypt.hash(req.body.password, 10, (err, hashedPass) => {
-    if(err){
-      log(err);
-    }
-    else {
-      var connection = maria.createConnection({
-        host: '127.0.0.1',
-        user: 'mysql',
-        password: config.mariadb_password,
-        database: 'blog',
-        port: 3306
-      });
-      connection.query("SELECT password FROM authors WHERE email=\'"+username+"\';", (err, rows) => {
-        console.log(rows);
-
-        connection.end();
-      });
-    }
+app.post('/login', (req,res) =>{
+  console.log(req.body)
+//  let username = req.body.username;
+  var connection = maria.createConnection({
+    host: '172.17.0.1',
+    user: 'mysql',
+    password: config.mariadb_password,
+    database: 'blog',
+    port: 3306
   });
-});*/
+ /* connection.query("SELECT password FROM authors WHERE email=\'"+username+"\';", (err, rows) => {
+    console.log(rows);
+
+    connection.end();
+  });*/
+});
 
 
 
