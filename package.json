@@ -5,14 +5,16 @@
   "main": "private/index.js",
   "scripts": {
     "build-dev": "./node_modules/.bin/webpack --mode development",
-    "start": "nodemon --exec ./node_modules/.bin/babel-node private/index.js"
+    "start:dev": "nodemon --exec node private/index.js"
   },
   "author": "Nate Richman",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "bootstrap": "^4.3.1",
     "colorthief": "^2.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mariadb": "^2.1.0",
     "mime": "^2.4.4",
     "react": "^16.8.6",
@@ -28,11 +30,7 @@
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
     "css-loader": "^3.1.0",
     "nodemon": "^1.19.1",
     "style-loader": "^0.23.1",
