@@ -174,19 +174,44 @@ app.post('/resources*', (req, res) => {
 });
 app.post('/login', (req,res) =>{
   console.log(req.body)
-//  let username = req.body.username;
-  var connection = maria.createConnection({
+  let username = req.body.username;
+  maria.createConnection({
     host: '172.17.0.1',
     user: 'mysql',
     password: config.mariadb_password,
     database: 'blog',
     port: 3306
-  });
- /* connection.query("SELECT password FROM authors WHERE email=\'"+username+"\';", (err, rows) => {
-    console.log(rows);
-
-    connection.end();
-  });*/
+  })
+    .then(conn => {
+      conn.query("SELECT password FROM authors WHERE email=\'"+username+"\';")
+        .then(rows => {
+          bcrypt.compare(req.body.password, rows[0].password, (err, res) => {
+            if(err){
+              log(err);
+              res.sendStatus(500);
+              conn.end();
+            } else {
+              jwt.sign({author: username}, config.secret, {expiresIn:"1h"}, (err, token) => {
+                if(err){
+                  log(err)
+                  res.sendStatus(500);
+                  conn.end();
+                } else {
+                  res.cookie('token', token, {httpOnly: true});
+                  res.sendStatus(200);
+                  conn.end();
+                }
+              })
+            }
+          })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      })
+    .catch(err => {
+      console.log(err);
+    })
 });
 
 
