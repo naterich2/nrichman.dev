@@ -1,5 +1,5 @@
 import './Home.css';
-import { Modal, Form, Button, Container, Row, Col} from 'react-bootstrap';
+import { Modal, Form, Button, Container, Row, Col, Alert} from 'react-bootstrap';
 import React from 'react';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import ReactMarkdown from 'react-markdown';
@@ -9,22 +9,45 @@ class BlogForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      fulltext: ''
+      fulltext: '',
+      submitted: false,
+      msg: ''
     };
   }
 
   render(){
     const handleSubmit = () => {
-      document.getElementById('title').text;
+      let post_body = {
+        title: document.getElementById('blog-title').value,
+        synopsis: document.getElementById('blog-synopsis').value,
+        beginning: document.getElementById('blog-beginning').value,
+        tags: document.getElementById('blog-tags').value,
+        fulltext: document.getElementById('blog-fulltext').value,
+      }
+      fetch('/resources/blog/add',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(post_body),
+      })
+        .then(resp => {
+          if(resp.status == 200) {
+            this.props.close();
+          }
+          else{
+            this.setState({fulltext: this.state.fulltext, submitted: this.state.submitted, msg: 'something went wrong'});
+          }
+        });
     }
     return (
       <>
         <Modal size='xl' show={this.props.show}>
           <Modal.Header>
-            {this.props.newBlog && <Modal.Title>Upload New Blog</Modal.Title>}
-            {! this.props.newBlog && <Modal.Title>Add Comment</Modal.Title>}
+            <Modal.Title>Upload New Blog</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            {this.state.msg && <Alert>{this.state.msg}</Alert>}
             <Container>
               <Form>
                 <Row>
@@ -61,7 +84,7 @@ class BlogForm extends React.Component {
                 </Row>
                 <Row>
                   <Col md={{span:8, offset: 2}}>
-                    <Form.Group controlId="fulltext">
+                    <Form.Group >
                       <Form.Label>Content</Form.Label>
                       <Form.Control as="textarea" value={this.state.fulltext} rows="6" id="blog-fulltext" onChange={() => this.setState({open: this.state.open, fulltext: document.getElementById('blog-fulltext').value})} />
                     </Form.Group>
