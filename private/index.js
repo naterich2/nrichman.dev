@@ -183,11 +183,32 @@ app.get('/resources/images', (req, res) => {
     if(err) console.log(err);
     const file = files[Math.floor(Math.random()*files.length)];
     res.setHeader('Content-Type', mime.getType(path.join(pictures,file)));
-    console.log(req.headers)
     log('New request for picture from'+req.headers['user-agent']+', sending file '+file);
     res.sendFile(path.join(pictures,file));
   });
 });
+app.get('/resources/verifyToken', (req, res) => {
+
+  let token = req.cookies.token;
+  if(!token){
+    res.sendStatus(401);
+  } else {
+    try {
+      const authorized = jwt.verify(token,config.secret);
+      log("verifyToke: sending authorized")
+      res.status(200).json({'username':authorized.name});
+    } catch(e) {
+      if(e.name == 'TokenExpiredError'){
+        log("verifyToke: sending unauthorized")
+        res.sendStatus(401);
+      }
+      else{
+        res.sendStatus(403);
+        log("verifyToke: sending forbidden")
+      }
+    }
+  }
+})
 app.post('/resources*', (req, res) => {
   let latitude = encodeURIComponent(req.body.latitude);
   let longitude = encodeURIComponent(req.body.longitude);
@@ -223,8 +244,19 @@ app.post('/resources*', (req, res) => {
   });
 });
 app.post('/login', (req,res) =>{
-  console.log("request")
-  logIn(req.body.username, req.body.password, res);
+  if(req.cookies && req.cookies.token){
+    jwt.verify(req.cookies.token, config.secret,(err, resp) => {
+      if(err.name == 'TokenExpiredError'){
+        log("login: expired token, sending a new one")
+        logIn(req.body.username, req.body.password, res);
+      } else {
+        req.sendStatus(400);
+      }
+    })
+  } else {
+    log("login: new login request from "+req.body.username)
+    logIn(req.body.username, req.body.password, res);
+  }
 });
 app.post('/resources/blog/add', (req, res) => {
   let token = req.body.token ||

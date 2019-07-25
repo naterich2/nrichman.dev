@@ -48,6 +48,7 @@ class Login extends React.Component  {
                 password: document.getElementById('password-field').value
               })
             }).then((resp) => {
+              if(resp.status == 500) this.props.onClose();
               return response.json()
             }).then((data) => console.log(data));
           }}>Login</Button>

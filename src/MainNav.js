@@ -8,11 +8,22 @@ class MainNav extends React.Component {
     super(props);
     this.state = {
       showModal: false,
+      loggedIn: false,
+      user: ''
     }
   }
-//	const handleDropdownSelect = eventKey => {
-//
-//	};
+  componentDidMount(){
+    fetch('/resources/verifyToken')
+      .then(resp => {
+        if(resp.status == 200){
+          this.setState({showModal: this.state.showModal, loggedIn: true});
+        }
+        return resp.json();
+      })
+      .then(myjson => {
+        this.setState({showModal: this.state.showModal, loggedIn: this.state.loggedIn, user: myjson.name})
+      });
+  }
 	render(){
     const close = () => this.setState({showModal: false});
 		return (
@@ -23,14 +34,16 @@ class MainNav extends React.Component {
 						<Nav.Link eventKey="blog" onSelect={(evtKey, evt) => this.props.history.push("/blog")}>Blog</Nav.Link>
 						<Nav.Link eventKey="resume" onSelect={(evtKey, evt) => this.props.history.push("/resume")}>Resume</Nav.Link>
 						<Nav.Link eventKey="git" onSelect={(evtKey,evt) => window.location.href = "https://git.nrichman.dev"}>Git Repo</Nav.Link>
-						<NavDropdown title="Intranet" id="intranet-dropdown">
-							<NavDropdown.Item eventKey="pihole" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.34/admin"}>Pi-Hole Admin</NavDropdown.Item>
-							<NavDropdown.Item eventKey="grafana" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.197:3000"}>Grafana</NavDropdown.Item>
-							<NavDropdown.Item eventKey="transmission" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.197:9000"}>Transmission</NavDropdown.Item>
-							<NavDropdown.Item eventKey="deezloader" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.197:1730"}>Deezloader</NavDropdown.Item>
-							<NavDropdown.Item eventKey="soulseek" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.197:6080"}>Soulseek</NavDropdown.Item>
-						</NavDropdown>
-            <Button variant="link" style={{position: 'absolute', right:'5%'}} onClick={() => this.setState({showModal: true})}>Login</Button>
+            { this.state.loggedIn &&
+              <NavDropdown title="Intranet" id="intranet-dropdown">
+                <NavDropdown.Item eventKey="pihole" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.34/admin"}>Pi-Hole Admin</NavDropdown.Item>
+                <NavDropdown.Item eventKey="grafana" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.197:3000"}>Grafana</NavDropdown.Item>
+                <NavDropdown.Item eventKey="transmission" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.197:9000"}>Transmission</NavDropdown.Item>
+                <NavDropdown.Item eventKey="deezloader" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.197:1730"}>Deezloader</NavDropdown.Item>
+                <NavDropdown.Item eventKey="soulseek" onSelect={(evtKey,evt) => window.location.href = "http://192.168.0.197:6080"}>Soulseek</NavDropdown.Item>
+              </NavDropdown>
+            }
+      { !this.state.loggedIn && <Button variant="link" style={{position: 'absolute', right:'5%'}} onClick={() => this.setState({showModal: true})}>Login</Button> }
 					</Nav>
 				</Navbar>
         <Login show={this.state.showModal} onClose={close.bind(this)} />
