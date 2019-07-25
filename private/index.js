@@ -5,7 +5,7 @@ const config = require('./config.js');
 const mime = require('mime');
 const maria = require('mariadb');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const bp = require('body-parser');
 
 function log(message){
@@ -16,6 +16,32 @@ let app = express()
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(bp.urlencoded({extended: false}));
 app.use(bp.json())
+
+const logIn = async function(username, password, res){
+  try {
+    const conn = await maria.createConnection({
+      host: '172.17.0.1',
+      user: 'mysql',
+      password: config.mariadb_password,
+      database: 'blog',
+      port: 3306
+    });
+    const query_result = await conn.query("SELECT password FROM authors WHERE email=\'"+username+"\';");
+    const eq = await bcrypt.compare(password, query_result[0].password);
+    if(eq){
+      const token = await jwt.sign({author: username}, config.secret, {expiresIn:"1h"});
+      res.cookie('token', token, {httpOnly: true});
+      res.sendStatus(200);
+      log("done")
+      conn.end();
+    } else {
+      res.sendStatus(403);
+    }
+  } catch(e){
+    log(e)
+  }
+}
+
 app.get('/resources/blog/blog_id/:id', (req, res) => {
   var connection = maria.createConnection({
     host: '127.0.0.1',
@@ -173,16 +199,9 @@ app.post('/resources*', (req, res) => {
   });
 });
 app.post('/login', (req,res) =>{
-  console.log(req.body)
-  let username = req.body.username;
-  maria.createConnection({
-    host: '172.17.0.1',
-    user: 'mysql',
-    password: config.mariadb_password,
-    database: 'blog',
-    port: 3306
-  })
-    .then(conn => {
+  console.log("request")
+  logIn(req.body.username, req.body.password, res);
+/*    .then(conn => {
       conn.query("SELECT password FROM authors WHERE email=\'"+username+"\';")
         .then(rows => {
           console.log("here")
@@ -216,7 +235,7 @@ app.post('/login', (req,res) =>{
       })
     .catch(err => {
       console.log(err);
-    })
+    })*/
 });
 
 
