@@ -66,7 +66,7 @@ class Blog extends React.Component{
           <BlogForm close={onClose.bind(this)} show={this.state.showModal}/>
           <div style={{position:'absolute', backgroundAttachment: 'scroll', top:'70%', width:'100%', backgroundColor: '#282c35'}}>
             <MainNav />
-            <Button variant="primary" onClick={this.setState({blogs: this.state.blogs,isLoading:this.state.isLoading, showModal: true})}>Add Blog</Button>
+            <Button variant="primary" onClick={() => this.setState({blogs: this.state.blogs,isLoading:this.state.isLoading, showModal: true})}>Add Blog</Button>
             <Carousel>
               {items}
             </Carousel>
