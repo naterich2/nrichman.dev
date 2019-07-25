@@ -7,16 +7,18 @@ const maria = require('mariadb');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const bp = require('body-parser');
+const cookies = require('cookie-parser');
+
+let app = express();
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(bp.urlencoded({extended: false}));
+app.use(bp.json());
+app.use(cookies());
 
 function log(message){
   console.log(new Date().toLocaleTimeString({month: 'short', day: 'numeric',
     year: 'numeric', hour: '2-digit', minute:'2-digit', second: '2-digit'})+': '+message);
 }
-let app = express()
-app.use(express.static(path.join(__dirname, '../public')));
-app.use(bp.urlencoded({extended: false}));
-app.use(bp.json())
-
 const logIn = async function(username, password, res){
   try {
     const conn = await maria.createConnection({
@@ -26,13 +28,12 @@ const logIn = async function(username, password, res){
       database: 'blog',
       port: 3306
     });
-    const query_result = await conn.query("SELECT password FROM authors WHERE email=\'"+username+"\';");
+    const query_result = await conn.query("SELECT password,name FROM authors WHERE email=?;",[username]);
     const eq = await bcrypt.compare(password, query_result[0].password);
     if(eq){
-      const token = await jwt.sign({author: username}, config.secret, {expiresIn:"1h"});
+      const token = await jwt.sign({'username': username,'name': query_result[0].name}, config.secret, {expiresIn:"1h"});
       res.cookie('token', token, {httpOnly: true});
       res.sendStatus(200);
-      log("done")
       conn.end();
     } else {
       res.sendStatus(403);
@@ -41,7 +42,33 @@ const logIn = async function(username, password, res){
     log(e)
   }
 }
-
+const addBlog = async function(token, res, title, synopsis, beginning, tags, fulltext){
+  try {
+    const authorized = await jwt.verify(token, config.secret);
+    const conn = await maria.createConnection({
+      host: '172.17.0.1',
+      user: 'mysql',
+      password: config.mariadb_password,
+      database: 'blog',
+      port: 3306
+    });
+    await fs.writeFile(path.join(__dirname,config.blog,title,'.md'), fulltext);
+    await conn.query('INSERT INTO posts (title, author, storage_path,'+
+      'synopsis, beginning, tags, full_text) VALUES(?,?,?,?,?,?,?);',[
+        title,
+        authorized.name,
+        path.join(__dirname,config.blog,title, '.md'),
+        synopsis,
+        beginning,
+        tags,
+        fulltext
+      ]);
+    res.sendStatus(200);
+  } catch(e){
+    log(e);
+    res.sendStatus(500);
+  }
+}
 app.get('/resources/blog/blog_id/:id', (req, res) => {
   var connection = maria.createConnection({
     host: '127.0.0.1',
@@ -56,7 +83,6 @@ app.get('/resources/blog/blog_id/:id', (req, res) => {
     connection.end();
   });
 });
-
 app.get('/resources/blog/recent', (req, res) => {
   maria.createConnection({
     host: '172.17.0.1',
@@ -115,7 +141,6 @@ app.get('/resources/blog/blog_info', (req,res) => {
     });
 
 });
-
 app.get('/resources/blog/tag/:tag', (req,res)=>{
   var connection = maria.createConnection({
     host: '127.0.0.1',
@@ -151,7 +176,6 @@ app.get('/blog*', (req,res) => {
     if(err) throw(err);
   });
 })
-
 app.get('/resources/images', (req, res) => {
   //Request for random image from pictures dir
   const pictures = path.join(__dirname,config.pictures);
@@ -201,6 +225,18 @@ app.post('/resources*', (req, res) => {
 app.post('/login', (req,res) =>{
   console.log("request")
   logIn(req.body.username, req.body.password, res);
+});
+app.post('/resources/blog/add', (req, res) => {
+  let token = req.body.token ||
+              req.query.token ||
+              req.headers['x-access-token'] ||
+              req.cookies.token;
+  if(!token) {
+    res.status(403).send("No token provided");
+  } else {
+    addBlog(token, res, req.body.title, req.body.synopsis, req.body.beginning,
+      req.body.tags, req.body.fulltext);
+  }
 });
 
 
