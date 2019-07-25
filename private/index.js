@@ -201,41 +201,6 @@ app.post('/resources*', (req, res) => {
 app.post('/login', (req,res) =>{
   console.log("request")
   logIn(req.body.username, req.body.password, res);
-/*    .then(conn => {
-      conn.query("SELECT password FROM authors WHERE email=\'"+username+"\';")
-        .then(rows => {
-          console.log("here")
-          bcrypt.compare(req.body.password, rows[0].password, (err, equal) => {
-            console.log("entered")
-            if(err){
-              log(err);
-              res.sendStatus(500);
-              conn.end();
-            } else if(equal) {
-              console.log(equal);
-              jwt.sign({author: username}, config.secret, {expiresIn:"1h"}, (err, token) => {
-                if(err){
-                  log(err)
-                  res.sendStatus(500);
-                  conn.end();
-                } else {
-                  res.cookie('token', token, {httpOnly: true});
-                  res.sendStatus(200);
-                  conn.end();
-                }
-              })
-            } else {
-              res.sendStatus(403);
-            }
-          })
-        })
-        .catch(err => {
-          console.log(err);
-        })
-      })
-    .catch(err => {
-      console.log(err);
-    })*/
 });
 
 
