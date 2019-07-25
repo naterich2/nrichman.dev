@@ -5,13 +5,15 @@ import Live from './Live.js'
 import MainNav from './MainNav.js'
 import Footer from './Footer.js'
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css'
+import BlogForm from './BlogForm.js';
 
 class Blog extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       blogs: null,
-      isLoading: true
+      isLoading: true,
+      showModal: false
     }
   }
   componentDidMount(){
@@ -55,11 +57,16 @@ class Blog extends React.Component{
           </Carousel.Item>
         )
       }
+      const onClose = () => {
+        this.setState({blogs: this.state.blogs,isLoading:this.state.isLoading, showModal: false})
+      }
       return (
         <div className="home">
           <Live />
+          <BlogForm close={onClose.bind(this)} show={this.state.showModal}/>
           <div style={{position:'absolute', backgroundAttachment: 'scroll', top:'70%', width:'100%', backgroundColor: '#282c35'}}>
             <MainNav />
+            <Button variant="primary" onClick={this.setState({blogs: this.state.blogs,isLoading:this.state.isLoading, showModal: true})}>Add Blog</Button>
             <Carousel>
               {items}
             </Carousel>
