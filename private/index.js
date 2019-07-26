@@ -8,7 +8,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const bp = require('body-parser');
 const cookies = require('cookie-parser');
+const util = require('util');
 
+const writeFile = util.promisify(fs.writeFile);
 let app = express();
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(bp.urlencoded({extended: false}));
@@ -52,12 +54,12 @@ const addBlog = async function(token, res, title, synopsis, beginning, tags, ful
       database: 'blog',
       port: 3306
     });
-    await fs.writeFile(path.join(__dirname,config.blog,title,'.md'), fulltext);
+    await writeFile(path.join(__dirname,config.blog,title+'.md'), fulltext);
     await conn.query('INSERT INTO posts (title, author, storage_path,'+
       'synopsis, beginning, tags, full_text) VALUES(?,?,?,?,?,?,?);',[
         title,
         authorized.name,
-        path.join(__dirname,config.blog,title, '.md'),
+        path.join(__dirname,config.blog,title+'.md'),
         synopsis,
         beginning,
         tags,
@@ -208,8 +210,6 @@ app.get('/resources/verifyToken', (req, res) => {
     }
   }
 })
-app.post('/resources*', (req, res) => {
-});
 app.post('/login', (req,res) =>{
   if(req.cookies && req.cookies.token){
     jwt.verify(req.cookies.token, config.secret,(err, resp) => {
@@ -226,10 +226,8 @@ app.post('/login', (req,res) =>{
   }
 });
 app.post('/resources/blog/add', (req, res) => {
-  let token = req.body.token ||
-              req.query.token ||
-              req.headers['x-access-token'] ||
-              req.cookies.token;
+  let token = req.cookies.token;
+  console.log(req.body, req.cookies)
   if(!token) {
     res.status(403).send("No token provided");
   } else {

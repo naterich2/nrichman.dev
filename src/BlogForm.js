@@ -17,6 +17,7 @@ class BlogForm extends React.Component {
 
   render(){
     const handleSubmit = () => {
+      console.log("triggered")
       let post_body = {
         title: document.getElementById('blog-title').value,
         synopsis: document.getElementById('blog-synopsis').value,
@@ -32,6 +33,7 @@ class BlogForm extends React.Component {
         body: JSON.stringify(post_body),
       })
         .then(resp => {
+          console.log("here")
           if(resp.status == 200) {
             this.props.close();
           }
