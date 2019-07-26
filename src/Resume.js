@@ -3,7 +3,7 @@ import { Jumbotron,Container,Row,Col,Image,
     Table,OverlayTrigger,Tooltip,Button } from 'react-bootstrap';
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPython, faNodeJs, faJava } from '@fortawesome/free-brands-svg-icons';
+import { fab,faPython, faNodeJs, faJava } from '@fortawesome/free-brands-svg-icons';
 import Live from './Live.js'
 import MainNav from './MainNav.js'
 import Footer from './Footer.js'
