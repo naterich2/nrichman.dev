@@ -49,7 +49,7 @@ class Login extends React.Component  {
               })
             }).then((resp) => {
               if(resp.status == 500) this.props.onClose();
-              return response.json()
+              return resp.json()
             }).then((data) => console.log(data));
           }}>Login</Button>
         </Modal.Footer>
