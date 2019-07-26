@@ -28,7 +28,7 @@ class Resume extends React.Component {
               <Tooltip id={`tooltip-${language}`}>{description}</Tooltip>
             }
           >
-            <Image src='/matlab.png' height='32px' />
+            <Image src='/matlab.png' height='32px' style={{paddingLeft: '2px', paddingRight: '2px', marginLeft:'2px',marginRight: '2px'}} />
           </OverlayTrigger>
         );
       }
@@ -41,7 +41,7 @@ class Resume extends React.Component {
               <Tooltip id={`tooltip-${language}`}>{description}</Tooltip>
             }
           >
-            <FontAwesomeIcon icon={['fab',language]} size={'2x'}/>
+            <FontAwesomeIcon style={{verticalAlign: 'middle',paddingLeft:'2px',paddingRight: '2px',marginLeft:'2px',marginRight: '2px'}} icon={['fab',language]} size={'2x'}/>
           </OverlayTrigger>
         );
       }
@@ -199,15 +199,11 @@ class Resume extends React.Component {
                   <hr width="100%"/>
               </Row>
               <Row>
-                <Col md={5}>
-                  <Table borderless>
-                    <tbody>
-                      <tr>
-                        <td>Programming: </td>
-                        <td>{programming_html}</td>
-                      </tr>
-                    </tbody>
-                  </Table>
+                <Col md={4}>
+                  <p><strong>Programming Languages: </strong></p>
+                </Col>
+                <Col md={8}>
+                  {programming_html}
                 </Col>
               </Row>
             </Container>
