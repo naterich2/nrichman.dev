@@ -3,29 +3,49 @@ import { Jumbotron,Container,Row,Col,Image,
     Table,OverlayTrigger,Tooltip,Button } from 'react-bootstrap';
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { fab,faPython, faNodeJs, faJava } from '@fortawesome/free-brands-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons';
 import Live from './Live.js'
 import MainNav from './MainNav.js'
 import Footer from './Footer.js'
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css'
+
+library.add(fab);
 class Resume extends React.Component {
   render(){
-    const programming = [['faNodeJs', 'I used node to create the webserver for this website, as well is during my time in Network Services at DoIT.  Click to see my git repo!'],
+    const programming = [['node-js', 'I used node to create the webserver for this website, as well is during my time in Network Services at DoIT.  Click to see my git repo!'],
       ['python','I used python for my bioinformatics class as well as for csv parsing and generation at CoreBiome, I also use it to write quick scripts to help me with math homework'],
-      ['faPython', 'I have used MATLAB for data analysis and model fitting during my Hilldale research, and I created a program to detect different life stages in <i>S. Cerevisiae</i> for a computational photography class'],
-      ['faJava', 'I used Java for intro to CS, data structures, and AI. I created a replica Minesweeper game, and attempted and failed to make an atomic orbital viewer.  Click to go to my github page to see those projects.'],
-      ['faJava', 'I wrote a driver for a DHT11 temperature and humidity sensor for one of my raspberry pi\'s, and I used C to do microcontroller programming at Caerus']];
-    const programming_html = programming.map(([language, description]) => (
-      <OverlayTrigger
-        key={language}
-        placement={'top'}
-        overlay={
-          <Tooltip id={`tooltip-${language}`}>{description}</Tooltip>
-        }
-      >
-      <FontAwesomeIcon icon={['fab',language]} />
-      </OverlayTrigger>
-    ));
+      ['java', 'I used Java for intro to CS, data structures, and AI. I created a replica Minesweeper game, and attempted and failed to make an atomic orbital viewer.  Click to go to my github page to see those projects.'],
+      ['cuttlefish', 'I wrote a driver for a DHT11 temperature and humidity sensor for one of my raspberry pi\'s, and I used C to do microcontroller programming at Caerus'],
+      ['MATLAB', 'I have used MATLAB for data analysis and model fitting during my Hilldale research, and I created a program to detect different life stages in S. Cerevisiae for a computational photography class']];
+    const programming_html = programming.map(([language, description]) => {
+      if(language == 'MATLAB'){
+        return (
+          <OverlayTrigger
+            key={language}
+            placement={'top'}
+            overlay={
+              <Tooltip id={`tooltip-${language}`}>{description}</Tooltip>
+            }
+          >
+            <Image src='/matlab.png' height='32px' />
+          </OverlayTrigger>
+        );
+      }
+      else{
+        return (
+          <OverlayTrigger
+            key={language}
+            placement={'top'}
+            overlay={
+              <Tooltip id={`tooltip-${language}`}>{description}</Tooltip>
+            }
+          >
+            <FontAwesomeIcon icon={['fab',language]} size={'2x'}/>
+          </OverlayTrigger>
+        );
+      }
+    });
     console.log(programming_html)
     return (
       <div className="resume">
@@ -173,7 +193,7 @@ class Resume extends React.Component {
                 </Row>
               </div>
               <Row>
-                  <Col md={{span: 5}}>
+                  <Col md={{span: 8}}>
                     <h4><b>Skills and Achievments</b></h4>
                   </Col>
                   <hr width="100%"/>
