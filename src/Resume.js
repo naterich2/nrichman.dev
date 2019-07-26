@@ -9,16 +9,17 @@ import Live from './Live.js'
 import MainNav from './MainNav.js'
 import Footer from './Footer.js'
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css'
+import { withRouter } from 'react-router-dom'
 
 library.add(fab);
 class Resume extends React.Component {
   render(){
-    const programming = [['node-js', 'I used node to create the webserver for this website, as well is during my time in Network Services at DoIT.  Click to see my git repo!'],
-      ['python','I used python for my bioinformatics class as well as for csv parsing and generation at CoreBiome, I also use it to write quick scripts to help me with math homework'],
-      ['java', 'I used Java for intro to CS, data structures, and AI. I created a replica Minesweeper game, and attempted and failed to make an atomic orbital viewer.  Click to go to my github page to see those projects.'],
-      ['cuttlefish', 'I wrote a driver for a DHT11 temperature and humidity sensor for one of my raspberry pi\'s, and I used C to do microcontroller programming at Caerus'],
-      ['MATLAB', 'I have used MATLAB for data analysis and model fitting during my Hilldale research, and I created a program to detect different life stages in S. Cerevisiae for a computational photography class']];
-    const programming_html = programming.map(([language, description]) => {
+    const programming = [['node-js', 'I used node to create the webserver for this website, as well is during my time in Network Services at DoIT.  Click to see my git repo!','https://git.nrichman.dev'],
+      ['python','I used python for my bioinformatics class as well as for csv parsing and generation at CoreBiome, I also use it to write quick scripts to help me with math homework','https://git.nrichman.dev'],
+      ['java', 'I used Java for intro to CS, data structures, and AI. I created a replica Minesweeper game, and attempted and failed to make an atomic orbital viewer.  Click to go to my github page to see those projects.','https://github.com/naterich2'],
+      ['cuttlefish', 'I wrote a driver for a DHT11 temperature and humidity sensor for one of my raspberry pi\'s, and I used C to do microcontroller programming at Caerus','https://github.com/naterich2'],
+      ['MATLAB', 'I have used MATLAB for data analysis and model fitting during my Hilldale research, and I created a program to detect different life stages in S. Cerevisiae for a computational photography class','https://github.com/naterich2']];
+    const programming_html = programming.map(([language, description, link]) => {
       if(language == 'MATLAB'){
         return (
           <OverlayTrigger
@@ -28,7 +29,7 @@ class Resume extends React.Component {
               <Tooltip id={`tooltip-${language}`}>{description}</Tooltip>
             }
           >
-            <Image src='/matlab.png' height='32px' style={{paddingLeft: '2px', paddingRight: '2px', marginLeft:'2px',marginRight: '2px'}} />
+            <Image src='/matlab.png' height='32px' style={{paddingLeft: '2px', paddingRight: '2px', marginLeft:'2px',marginRight: '2px'}} onClick={() => window.location.href=link}/>
           </OverlayTrigger>
         );
       }
@@ -41,7 +42,7 @@ class Resume extends React.Component {
               <Tooltip id={`tooltip-${language}`}>{description}</Tooltip>
             }
           >
-            <FontAwesomeIcon style={{verticalAlign: 'middle',paddingLeft:'2px',paddingRight: '2px',marginLeft:'2px',marginRight: '2px'}} icon={['fab',language]} size={'2x'}/>
+            <FontAwesomeIcon style={{verticalAlign: 'middle',paddingLeft:'2px',paddingRight: '2px',marginLeft:'2px',marginRight: '2px'}} icon={['fab',language]} size={'2x'} onClick={() => window.location.href=link}/>
           </OverlayTrigger>
         );
       }
@@ -215,4 +216,4 @@ class Resume extends React.Component {
   }
 }
 
-export default Resume;
+export default withRouter(Resume);
