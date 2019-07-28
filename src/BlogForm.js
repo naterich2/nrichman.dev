@@ -3,6 +3,7 @@ import { Modal, Form, Button, Container, Row, Col, Alert} from 'react-bootstrap'
 import React from 'react';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import ReactMarkdown from 'react-markdown';
+import CodeBlock from './subs/CodeBlock.js';
 
 class BlogForm extends React.Component {
  // const my_id = this.props.match.params.id;
@@ -96,7 +97,7 @@ class BlogForm extends React.Component {
               </Form>
               <Row>
                 <Col md={12}>
-                  <ReactMarkdown source={this.state.fulltext} />
+                  <ReactMarkdown source={this.state.fulltext} renderers={{code: CodeBlock}} />
                 </Col>
               </Row>
             </Container>
