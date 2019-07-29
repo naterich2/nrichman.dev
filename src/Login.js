@@ -1,6 +1,7 @@
 import './Home.css';
 import { Modal, Alert, Form, Button } from 'react-bootstrap';
 import React from 'react'
+import PropTypes from 'prop-types';
 import Live from './Live.js'
 import MainNav from './MainNav.js'
 import Footer from './Footer.js'
@@ -59,7 +60,7 @@ class Login extends React.Component  {
 }
 
 Login.propTypes = {
-  show: PropTypes.bool.isRequired;
+  show: PropTypes.bool.isRequired
 }
 
 export default Login;
