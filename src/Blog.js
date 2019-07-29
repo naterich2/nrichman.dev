@@ -32,7 +32,7 @@ class Blog extends React.Component{
       const items = [];
       for (const [index,value] of this.state.blogs.entries()){
         items.push(
-          <Carousel.Item as={Container}>
+          <Carousel.Item as={Container} style={{cursor: 'pointer'}} onClick={() => this.props.history.push('/blog/'+value.ID)}>
             <Container style={{marginBottom: '10%'}}>
               <Row>
                 <Col md={{span:4, offset:4}}>
