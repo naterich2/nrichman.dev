@@ -10,8 +10,8 @@ class Login extends React.Component  {
   constructor(props){
     super(props);
     this.state = {
-      loading: false,
-      error: ''
+      error: '',
+      dialog: false,
     }
   }
   render(){
@@ -56,6 +56,10 @@ class Login extends React.Component  {
       </Modal>
     );
   }
+}
+
+Login.propTypes = {
+  show: PropTypes.bool.isRequired;
 }
 
 export default Login;

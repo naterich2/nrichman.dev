@@ -16,12 +16,11 @@ class MainNav extends React.Component {
     fetch('/resources/verifyToken')
       .then(resp => {
         if(resp.status == 200){
-          this.setState({showModal: this.state.showModal, loggedIn: true});
+          return resp.json();
         }
-        return resp.json();
       })
       .then(myjson => {
-        this.setState({showModal: this.state.showModal, loggedIn: this.state.loggedIn, user: myjson.name})
+        this.setState({showModal: this.state.showModal, loggedIn: true, user: myjson.username})
       });
   }
 	render(){
@@ -44,6 +43,7 @@ class MainNav extends React.Component {
               </NavDropdown>
             }
       { !this.state.loggedIn && <Button variant="link" style={{position: 'absolute', right:'5%'}} onClick={() => this.setState({showModal: true})}>Login</Button> }
+      { this.state.loggedIn && <Button variant="link" style={{position: 'absolute', right:'5%'}}>{this.state.user}</Button> }
 					</Nav>
 				</Navbar>
         <Login show={this.state.showModal} onClose={close.bind(this)} />
