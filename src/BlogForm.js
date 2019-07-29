@@ -1,6 +1,7 @@
 import './Home.css';
 import { Modal, Form, Button, Container, Row, Col, Alert} from 'react-bootstrap';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import ReactMarkdown from 'react-markdown';
 import CodeBlock from './subs/CodeBlock.js';
@@ -11,9 +12,20 @@ class BlogForm extends React.Component {
     super(props);
     this.state = {
       fulltext: '',
-      submitted: false,
-      msg: ''
+      msg: '',
+      type: 'danger',
+      dialog: false
     };
+  }
+
+  reset(){
+    this.props.close();
+    this.setState({
+      fulltext: this.state.fulltext,
+      msg: '',
+      type: 'danger',
+      dialog: false,
+    });
   }
 
   render(){
@@ -34,12 +46,17 @@ class BlogForm extends React.Component {
         body: JSON.stringify(post_body),
       })
         .then(resp => {
-          console.log("here")
+          console.log(resp)
           if(resp.status == 200) {
-            this.props.close();
+            reset();
           }
           else{
-            this.setState({fulltext: this.state.fulltext, submitted: this.state.submitted, msg: 'something went wrong'});
+            this.setState({
+              fulltext: this.state.fulltext,
+              msg: 'Please log in to submit a blog post',
+              type: 'danger',
+              dialog: true,
+            });
           }
         });
     }
@@ -50,7 +67,7 @@ class BlogForm extends React.Component {
             <Modal.Title>Upload New Blog</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this.state.msg && <Alert>{this.state.msg}</Alert>}
+            {this.state.dialog && <Alert variant={this.state.type}>{this.state.msg}</Alert>}
             <Container>
               <Form>
                 <Row>
@@ -103,13 +120,17 @@ class BlogForm extends React.Component {
             </Container>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => this.props.close()}>Close</Button>
+            <Button variant="secondary" onClick={() => this.reset()}>Close</Button>
             <Button variant="primary" onClick={handleSubmit.bind(this)}>Submit</Button>
           </Modal.Footer>
         </Modal>
       </>
     )
   }
+}
+
+BlogForm.propTypes = {
+  close: PropTypes.func
 }
 
 export default BlogForm;
