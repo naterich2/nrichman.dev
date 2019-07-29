@@ -48,7 +48,7 @@ class BlogForm extends React.Component {
         .then(resp => {
           console.log(resp)
           if(resp.status == 200) {
-            reset();
+            this.reset();
           }
           else{
             this.setState({
