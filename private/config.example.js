@@ -3,4 +3,4 @@ const config = {
   blog: ''
 }
 
-module.exports = config;
+module.exports = config
