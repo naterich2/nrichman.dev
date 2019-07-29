@@ -72,18 +72,27 @@ const addBlog = async function(token, res, title, synopsis, beginning, tags, ful
   }
 }
 app.get('/resources/blog/blog_id/:id', (req, res) => {
-  var connection = maria.createConnection({
-    host: '127.0.0.1',
+  maria.createConnection({
+    host: '172.17.0.1',
     user: 'mysql',
     password: config.mariadb_password,
     database: 'blog',
     port: 3306
-  });
-  connection.query("SELECT * FROM blogs WHERE id = "+req.params.id+";", (err, rows) => {
-    console.log(rows);
-    //res.json(rows) ??
-    connection.end();
-  });
+  })
+    .then(conn => {
+      conn.query('SELECT * FROM posts WHERE ID='+req.params.id+';')
+      .then( rows => {
+        res.setHeader('Content-Type','application/json');
+        res.json(rows[0]);
+        conn.end();
+      })
+      .catch( err => {
+        console.log(err);
+      })
+    .catch(err => {
+      console.log(err)
+    })
+  })
 });
 app.get('/resources/blog/recent', (req, res) => {
   maria.createConnection({
