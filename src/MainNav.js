@@ -20,7 +20,13 @@ class MainNav extends React.Component {
         }
       })
       .then(myjson => {
-        this.setState({showModal: this.state.showModal, loggedIn: true, user: myjson.username})
+        if(myjson){
+          this.setState({
+            showModal: this.state.showModal,
+            loggedIn: true,
+            user: myjson.username
+          });
+        }
       });
   }
 	render(){
