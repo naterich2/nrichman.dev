@@ -205,7 +205,7 @@ app.get('/resources/verifyToken', (req, res) => {
   } else {
     try {
       const authorized = jwt.verify(token,config.secret);
-      log("verifyToke: sending authorized")
+      log("verifyToken: sending authorized")
       res.status(200).json({'username':authorized.name});
     } catch(e) {
       if(e.name == 'TokenExpiredError'){
