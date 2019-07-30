@@ -1,6 +1,6 @@
 const config = require('./config.js')
 const maria = require('mariadb/callback')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 // var connection = maria.createConnection({
 //  host: '127.0.0.1',
