@@ -1,5 +1,5 @@
 import './Home.css'
-import { Carousel, ButtonGroup, Button, Container, Row, Col } from 'react-bootstrap'
+import { Carousel, ButtonGroup, Button, Jumbotron, Container, Row, Col } from 'react-bootstrap'
 import React from 'react'
 import Live from './Live.js'
 import MainNav from './MainNav.js'
@@ -36,17 +36,17 @@ class Blog extends React.Component {
             <Container style={{ marginBottom: '10%' }}>
               <Row>
                 <Col md={{ span: 4, offset: 4 }}>
-                  <h3 style={{ color: 'rgb(220,220,220)' }}>{value.title}</h3>
+                  <h3 style={{ color: 'rgb(70,70,70)' }}>{value.title}</h3>
                 </Col>
               </Row>
               <Row>
                 <Col md={{ span: 4, offset: 4 }}>
-                  <p style={{ color: 'rgb(220,220,220)' }}>{value.synopsis}</p>
+                  <p style={{ color: 'rgb(70,70,70)' }}>{value.synopsis}</p>
                 </Col>
               </Row>
               <Row>
                 <Col md={{ span: 4, offset: 4 }}>
-                  <p style={{ color: 'rgb(220,220,220)' }}>By: {value.author}</p>
+                  <p style={{ color: 'rgb(70,70,70)' }}>By: {value.author}</p>
                 </Col>
               </Row>
             </Container>
@@ -63,18 +63,20 @@ class Blog extends React.Component {
           <div style={{ position: 'absolute', backgroundAttachment: 'scroll', top: '70%', width: '100%', backgroundColor: '#282c35' }}>
             <MainNav />
             <Button variant='primary' onClick={() => this.setState({ blogs: this.state.blogs, isLoading: this.state.isLoading, showModal: true })}>Add Blog</Button>
-            <Container>
-              <Row>
-                <Col md={{ span: 10, offset: 1 }}>
-                  <Carousel>
-                    {items}
-                  </Carousel>
-                </Col>
-              </Row>
-            </Container>
-            <ButtonGroup>
-              {/* Have a button for all the tags */}
-            </ButtonGroup>
+            <Jumbotron style={{ left: '15%', width: '70%', position: 'relative' }}>
+              <Container>
+                <Row>
+                  <Col md={{ span: 10, offset: 1 }}>
+                    <Carousel>
+                      {items}
+                    </Carousel>
+                  </Col>
+                </Row>
+              </Container>
+              <ButtonGroup>
+                {/* Have a button for all the tags */}
+              </ButtonGroup>
+            </Jumbotron>
             <Footer />
           </div>
         </div>
