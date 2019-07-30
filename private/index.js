@@ -183,19 +183,34 @@ app.get('/resources/blog/blog_info', (req, res) => {
     })
 })
 app.get('/resources/blog/tag/:tag', (req, res) => {
-  var connection = maria.createConnection({
-    host: '127.0.0.1',
+  maria.createConnection({
+    host: '172.17.0.1',
     user: 'mysql',
     password: config.mariadb_password,
     database: 'blog',
     port: 3306
   })
-  connection.query("SELECT * FROM blogs WHERE tags LIKE '" + req.params.tag + "';", (err, rows) => {
-    if (err) console.log(err)
-    console.log(rows)
-    // res.json(rows) ??
-    connection.end()
+    .then(conn => conn.query('SELECT posts.* FROM postTags JOIN posts ON posts.ID=postTags.postID where postTags.tagID = ?;', [req.params.tag]))
+    .then(rows => {
+      console.log(rows)
+      // res.json(rows) ??
+      //
+    })
+    .catch(err => { console.log(err) })
+})
+app.get('/resources/blog/tags', (req, res) => {
+  maria.createConnection({
+    host: '172.17.0.1',
+    user: 'mysql',
+    password: config.mariadb_password,
+    database: 'blog',
+    port: 3306
   })
+    .then(conn => conn.query('SELECT * FROM tags'))
+    .then(rows => {
+      res.setHeader('Content-Type', 'application/json')
+      res.json(rows)
+    })
 })
 app.get('/', (req, res) => {
   const dir = path.resolve(path.join(__dirname, '../public'))
