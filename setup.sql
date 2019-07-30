@@ -30,6 +30,13 @@ CREATE TABLE comments (
 );
 
 CREATE TABLE tags (
-  name VARCHAR(30) NOT NULL
+  ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  tagName VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE postTags (
+  postID INT REFERENCES posts (ID),
+  tagID INT REFERENCES tags (ID),
+  CONSTRAINT pkPostTags PRIMARY KEY (postID, tagID)
 );
 

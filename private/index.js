@@ -59,7 +59,7 @@ const addBlog = async function (token, res, title, synopsis, beginning, tags, fu
       port: 3306
     })
     await writeFile(path.join(__dirname, config.blog, title + '.md'), fulltext)
-    await conn.query('INSERT INTO posts (title, author, storage_path,' +
+    const rows = await conn.query('INSERT INTO posts (title, author, storage_path,' +
       'synopsis, beginning, tags, full_text) VALUES(?,?,?,?,?,?,?);', [
       title,
       authorized.name,
@@ -69,10 +69,38 @@ const addBlog = async function (token, res, title, synopsis, beginning, tags, fu
       tags,
       fulltext
     ])
+    await addTags(rows.insertId, tags)
     res.sendStatus(200)
   } catch (e) {
     log(e)
     res.sendStatus(500)
+  }
+}
+const addTags = async function (id, tagsRaw) {
+  const tags = tagsRaw.split(',').map(e => e.trim())
+  try {
+    const conn = await maria.createConnection({
+      host: '172.17.0.1',
+      user: 'mysql',
+      password: config.mariadb_password,
+      database: 'blog',
+      port: 3306
+    })
+    // First insert any new tags into the tags db
+    const rows = await conn.query('SELECT tagName FROM tags;') // eslint-disable-line no-unused-vars
+    const databaseTags = rows.map(e => e.tagName)
+    console.log(databaseTags)
+    const uniqueTags = tags.filter(e => !databaseTags.includes(e))
+    const sub = uniqueTags.reduce((all, curr) => all = [...all, [curr]], []) // eslint-disable-line no-return-assign
+    const qs = 'INSERT INTO tags (tagName) VALUES (?);'
+    // https://stackoverflow.com/questions/37719975/how-to-do-bulk-insert-in-mariadb-using-nodejs
+    await conn.batch(qs, sub)
+
+    const postTags = tags.reduce((all, curr) => all = [...all, [id, curr]], [])// eslint-disable-line no-return-assign
+    const postTagsQS = 'INSERT INTO postTags(postID, tagID) SELECT ?, ID FROM tags WHERE tagName = ?'
+    await conn.batch(postTagsQS, postTags)
+  } catch (err) {
+    console.log(err)
   }
 }
 app.get('/resources/blog/blog_id/:id', (req, res) => {
