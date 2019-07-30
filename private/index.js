@@ -34,10 +34,10 @@ const logIn = async function (username, password, res) {
       database: 'blog',
       port: 3306
     })
-    const queryResult = await conn.query('SELECT password,name FROM authors WHERE email=?;', [username])
+    const queryResult = await conn.query('SELECT ID,password,name FROM authors WHERE email=?;', [username])
     const eq = await bcrypt.compare(password, queryResult[0].password)
     if (eq) {
-      const token = await jwt.sign({ username: username, name: queryResult[0].name }, config.secret, { expiresIn: '1h' })
+      const token = await jwt.sign({ username: username, name: queryResult[0].name, ID: queryResult[0].ID }, config.secret, { expiresIn: '1h' })
       res.cookie('token', token, { httpOnly: true })
       res.sendStatus(200)
       conn.end()
@@ -60,13 +60,11 @@ const addBlog = async function (token, res, title, synopsis, beginning, tags, fu
     })
     await writeFile(path.join(__dirname, config.blog, title + '.md'), fulltext)
     const rows = await conn.query('INSERT INTO posts (title, author, storage_path,' +
-      'synopsis, beginning, tags, full_text) VALUES(?,?,?,?,?,?,?);', [
+      'synopsis, content) VALUES(?,?,?,?,?);', [
       title,
-      authorized.name,
+      authorized.ID,
       path.join(__dirname, config.blog, title + '.md'),
       synopsis,
-      beginning,
-      tags,
       fulltext
     ])
     await addTags(rows.insertId, tags)
@@ -103,7 +101,7 @@ const addTags = async function (id, tagsRaw) {
     console.log(err)
   }
 }
-app.get('/resources/blog/blog_id/:id', (req, res) => {
+app.get('/resources/blog/blog/:id', (req, res) => {
   maria.createConnection({
     host: '172.17.0.1',
     user: 'mysql',
@@ -193,8 +191,9 @@ app.get('/resources/blog/tag/:tag', (req, res) => {
     .then(conn => conn.query('SELECT posts.* FROM postTags JOIN posts ON posts.ID=postTags.postID where postTags.tagID = ?;', [req.params.tag]))
     .then(rows => {
       console.log(rows)
-      // res.json(rows) ??
-      //
+      res.setHeader('Content-Type','application/json');
+      res.json(rows);
+
     })
     .catch(err => { console.log(err) })
 })
@@ -211,6 +210,44 @@ app.get('/resources/blog/tags', (req, res) => {
       res.setHeader('Content-Type', 'application/json')
       res.json(rows)
     })
+})
+app.get('/resources/blog/author/:authorID', (req,res) => {
+  maria.createConnection({
+    host: '172.17.0.1',
+    user: 'mysql',
+    password: config.mariadb_password,
+    database: 'blog',
+    port: 3306
+  })
+    .then(conn => conn.query('SELECT * FROM posts WHERE authorID=?;', [req.params.authorID]))
+    .then(rows => {
+      res.setHeader('Content-Type','application/json')
+      res.json(rows);
+    })
+})
+app.get('/resources/blog/authors', (req, res) => {
+  maria.createConnection({
+    host: '172.17.0.1',
+    user: 'mysql',
+    password: config.mariadb_password,
+    database: 'blog',
+    port: 3306
+  })
+    .then(conn => conn.query('SELECT * FROM authors;'))
+    .then(rows => {
+      res.setHeader('Content-Type','application/json');
+      res.json(rows);
+    })
+})
+app.post('/resources/blog/add', (req, res) => {
+  const token = req.cookies.token
+  console.log(req.body, req.cookies)
+  if (!token) {
+    res.status(403).send('No token provided')
+  } else {
+    addBlog(token, res, req.body.title, req.body.synopsis, req.body.beginning,
+      req.body.tags, req.body.fulltext)
+  }
 })
 app.get('/', (req, res) => {
   const dir = path.resolve(path.join(__dirname, '../public'))
@@ -277,16 +314,6 @@ app.post('/login', (req, res) => {
   } else {
     log('login: new login request from ' + req.body.username)
     logIn(req.body.username, req.body.password, res)
-  }
-})
-app.post('/resources/blog/add', (req, res) => {
-  const token = req.cookies.token
-  console.log(req.body, req.cookies)
-  if (!token) {
-    res.status(403).send('No token provided')
-  } else {
-    addBlog(token, res, req.body.title, req.body.synopsis, req.body.beginning,
-      req.body.tags, req.body.fulltext)
   }
 })
 
