@@ -32,7 +32,7 @@ class MainNav extends React.Component {
   }
 
   render () {
-    const close = () => this.setState({ showModal: false, loggedIn:true })
+    const close = () => this.setState({ showModal: false, loggedIn: true })
     return (
       <>
         <Navbar bg='dark' variant='dark'>
