@@ -40,7 +40,7 @@ class MainNav extends React.Component {
             <Nav.Link eventKey='home' onSelect={(evtKey, evt) => this.props.history.push('/')}>Home</Nav.Link>
             <Nav.Link eventKey='blog' onSelect={(evtKey, evt) => this.props.history.push('/blog')}>Blog</Nav.Link>
             <Nav.Link eventKey='resume' onSelect={(evtKey, evt) => this.props.history.push('/resume')}>Resume</Nav.Link>
-            <Nav.Link eventKey='git' onSelect={(evtKey, evt) => window.location.href = 'https://git.nrichman.dev'}>Git Repo</Nav.Link>{/* eslint-disable-line no-return-assign */}
+            <Nav.Link eventKey='git' onSelect={(evtKey, evt) => window.location.href = 'https://git.nrichman.dev'}>Git Repository</Nav.Link>{/* eslint-disable-line no-return-assign */}
             { this.state.loggedIn &&
             <NavDropdown title='Intranet' id='intranet-dropdown'>
               <NavDropdown.Item eventKey='pihole' onSelect={(evtKey, evt) => window.location.href = 'http://192.168.0.34/admin'}>Pi-Hole Admin</NavDropdown.Item> {/* eslint-disable-line no-return-assign */}
