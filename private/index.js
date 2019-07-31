@@ -59,7 +59,7 @@ const addBlog = async function (token, res, title, synopsis, beginning, tags, fu
       port: 3306
     })
     await writeFile(path.join(__dirname, config.blog, title + '.md'), fulltext)
-    const rows = await conn.query('INSERT INTO posts (title, author, storage_path,' +
+    const rows = await conn.query('INSERT INTO posts (title, authorID, storagePath,' +
       'synopsis, content) VALUES(?,?,?,?,?);', [
       title,
       authorized.ID,
@@ -92,11 +92,17 @@ const addTags = async function (id, tagsRaw) {
     const sub = uniqueTags.reduce((all, curr) => all = [...all, [curr]], []) // eslint-disable-line no-return-assign
     const qs = 'INSERT INTO tags (tagName) VALUES (?);'
     // https://stackoverflow.com/questions/37719975/how-to-do-bulk-insert-in-mariadb-using-nodejs
-    await conn.batch(qs, sub)
+    console.log(qs, sub)
+    if(sub.length > 0)
+      await conn.batch(qs, sub)
 
     const postTags = tags.reduce((all, curr) => all = [...all, [id, curr]], [])// eslint-disable-line no-return-assign
     const postTagsQS = 'INSERT INTO postTags(postID, tagID) SELECT ?, ID FROM tags WHERE tagName = ?'
-    await conn.batch(postTagsQS, postTags)
+    console.log(postTagsQS, postTags)
+    //await conn.batch(postTagsQS, postTags)
+    //  get "This command is not supported in the prepared statement protocol yet"
+    //  I believe that INSERT ... SELECT is not available in batch
+    postTags.map( async (curr) => { await conn.query(postTagsQS,[...curr])})
   } catch (err) {
     console.log(err)
   }
@@ -139,38 +145,6 @@ app.get('/resources/blog/recent', (req, res) => {
           // res.json(rows) ??
           res.json(rows)
           conn.end()
-        })
-        .catch(err => {
-          log(err)
-        })
-    })
-    .catch(err => {
-      log(err)
-    })
-})
-app.get('/resources/blog/blog_info', (req, res) => {
-  maria.createConnection({
-    host: '172.17.0.1',
-    user: 'mysql',
-    database: 'blog',
-    password: config.mariadb_password,
-    port: '3306'
-  })
-    .then(conn => {
-      console.log('test')
-      conn.query('SELECT name FROM authors;')
-        .then((rows1, meta1) => {
-          conn.query('SELECT name FROM tags')
-            .then((rows2, meta2) => {
-              res.setHeader('Content-Type', 'application/json')
-              res.json([rows1[0], rows2[0]])
-              // res.json(rows) ??
-              // res.json(rows);
-              conn.end()
-            })
-            .catch(err => {
-              log(err)
-            })
         })
         .catch(err => {
           log(err)
