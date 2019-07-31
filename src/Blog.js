@@ -12,7 +12,8 @@ class Blog extends React.Component {
     this.state = {
       blogs: null,
       isLoading: true,
-      showModal: false
+      showModal: false,
+      loggedIn: false
     }
   }
 
@@ -23,6 +24,10 @@ class Blog extends React.Component {
       })
       .then((data) => {
         this.setState({ blogs: data, isLoading: false })
+      })
+    fetch('/resources/verifyToken') // eslint-disable-line no-undef
+      .then((resp) => {
+        if(resp.status === 200) this.setState({loggedIn: true});
       })
   }
 
@@ -62,9 +67,9 @@ class Blog extends React.Component {
           <BlogForm close={onClose.bind(this)} show={this.state.showModal} />
           <div style={{ position: 'absolute', backgroundAttachment: 'scroll', top: '70%', width: '100%', backgroundColor: '#282c35' }}>
             <MainNav />
-            <Button variant='primary' onClick={() => this.setState({ blogs: this.state.blogs, isLoading: this.state.isLoading, showModal: true })}>Add Blog</Button>
             <Jumbotron style={{ left: '15%', width: '70%', position: 'relative' }}>
               <Container>
+                {this.state.loggedIn && <Row><Col md={2}><Button variant='primary' onClick={() => this.setState({ blogs: this.state.blogs, isLoading: this.state.isLoading, showModal: true })}>Add Blog</Button></Col></Row>}
                 <Row>
                   <Col md={{ span: 10, offset: 1 }}>
                     <Carousel>
