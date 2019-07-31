@@ -17,21 +17,29 @@ class Resume extends React.Component {
       ['java', 'I used Java for intro to CS, data structures, and AI. I created a replica Minesweeper game, and attempted and failed to make an atomic orbital viewer.  Click to go to my github page to see those projects.', 'https://github.com/naterich2'],
       ['cuttlefish', 'I wrote a driver for a DHT11 temperature and humidity sensor for one of my raspberry pi\'s, and I used C to do microcontroller programming at Caerus', 'https://github.com/naterich2'],
       ['MATLAB', 'I have used MATLAB for data analysis and model fitting during my Hilldale research, and I created a program to detect different life stages in S. Cerevisiae for a computational photography class', 'https://github.com/naterich2']]
+    // eslint-disable no-return-assign
     const programmingHtml = programming.map(([language, description, link]) => {
       if (language === 'MATLAB') {
         return (
           <OverlayTrigger
             key={language}
+            style={{ flexGrow: 1 }}
             placement={'top'}
             overlay={
-              <Tooltip id={`tooltip-${language}`}>{description}</Tooltip>
+              <Tooltip id={'tooltip-' + language}>{description}</Tooltip>
             }
           >
-            <Image src='/matlab.png' height='32px' style={{
-              paddingLeft: '2px',
-              paddingRight: '2px',
-              marginLeft: '2px',
-              marginRight: '2px' }} onClick={() => window.location.href = link} /> {/* eslint-disable-line no-return-assign */}
+            <Image src='/matlab.png' height='32px'
+              style={{
+                paddingLeft: '2px',
+                paddingRight: '2px',
+                marginLeft: '2px',
+                marginRight: '2px',
+                marginTop: '5px',
+                flexGrow: '.2'
+              }}
+              onClick={() => window.location.href = link}
+            />
           </OverlayTrigger>
         )
       } else {
@@ -39,15 +47,29 @@ class Resume extends React.Component {
           <OverlayTrigger
             key={language}
             placement={'top'}
+            style={{ flexGrow: 1 }}
             overlay={
-              <Tooltip id={`tooltip-${language}`}>{description}</Tooltip>
+              <Tooltip id={'tooltip-' + language}>{description}</Tooltip>
             }
           >
-            <FontAwesomeIcon style={{ verticalAlign: 'middle', paddingLeft: '2px', paddingRight: '2px', marginLeft: '2px', marginRight: '2px' }} icon={['fab', language]} size={'2x'} onClick={() => window.location.href = link} />{/* eslint-disable-line no-return-assign */}
+            <FontAwesomeIcon
+              style={{
+                verticalAlign: 'middle',
+                paddingLeft: '2px',
+                paddingRight: '2px',
+                marginLeft: '2px',
+                marginTop: '5px',
+                flexGrow: '1',
+                marginRight: '2px' }}
+              icon={['fab', language]}
+              size={'2x'}
+              onClick={() => window.location.href = link}
+            />
           </OverlayTrigger>
         )
       }
     })
+    // eslint-enable no-return-assign
     return (
       <div className='resume'>
         <div style={{ position: 'relative', backgroundAttachment: 'scroll', width: '100%', backgroundColor: '#282c35' }}>
@@ -99,7 +121,7 @@ class Resume extends React.Component {
                   <p stle={{ marginBottom: '5px' }}>&nbsp;&nbsp;&nbsp;&nbsp; Graduated with Highest Distinction</p>
                 </Col>
                 <Col md={{ span: 2, offset: 1 }}>
-                  <p class='date'>May 2019</p>
+                  <p className='date'>May 2019</p>
                 </Col>
               </Row>
               <Row>
@@ -108,7 +130,7 @@ class Resume extends React.Component {
                   <p style={{ marginBottom: '5px' }}><i>University of Wisconsin-Madison</i>, Madison, WI</p>
                 </Col>
                 <Col md={{ span: 2, offset: 2 }}>
-                  <p class='date'>May 2020</p>
+                  <p className='date'>May 2020</p>
                 </Col>
               </Row>
               <Row>
@@ -124,7 +146,7 @@ class Resume extends React.Component {
                     <p><i>Caeurs Corp.</i>, Arden Hills, MN</p>
                   </Col>
                   <Col md={{ span: 3, offset: 1 }}>
-                    <p class='date'>May 2018 - August 2018</p>
+                    <p className='date'>May 2018 - August 2018</p>
                   </Col>
                 </Row>
                 <Row>
@@ -140,7 +162,7 @@ class Resume extends React.Component {
                     <p><i>Department of IT Network Services, University of Wisconsin-Madison</i>, Madison, WI</p>
                   </Col>
                   <Col md={{ span: 3, offset: 1 }}>
-                    <p class='date'>October 2017 - May 2019</p>
+                    <p className='date'>October 2017 - May 2019</p>
                   </Col>
                 </Row>
                 <Row>
@@ -156,7 +178,7 @@ class Resume extends React.Component {
                     <p><i>CoreBiome, Inc.</i>, St. Paul, MN</p>
                   </Col>
                   <Col md={{ span: 3, offset: 1 }}>
-                    <p class='date'>May 2018 - August 2018</p>
+                    <p className='date'>May 2018 - August 2018</p>
                   </Col>
                 </Row>
                 <Row>
@@ -181,7 +203,7 @@ class Resume extends React.Component {
                     <p><i>Hilldale Undergraduate Research Fellowship</i>, Melih Eriten, Mechanical Engineering, UW-Madison</p>
                   </Col>
                   <Col md={{ span: 3, offset: 1 }}>
-                    <p class='date'>September 2017 - May 2018</p>
+                    <p className='date'>September 2017 - May 2018</p>
                   </Col>
                 </Row>
                 <Row>
@@ -199,12 +221,37 @@ class Resume extends React.Component {
                 </Col>
                 <hr width='100%' />
               </Row>
-              <Row>
-                <Col md={4}>
-                  <p><strong>Programming Languages: </strong></p>
+              <Row style={{ marginBottom: '10px' }}>
+                <Col md={6}>
+                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Programming Languages: </strong></p>
+                  <div style={{ display: 'flex', marginTop: '5' }}>
+                    {programmingHtml}
+                  </div>
                 </Col>
-                <Col md={8}>
-                  {programmingHtml}
+                <Col md={6}>
+                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Biological techniques: </strong></p>
+                  <p style={{ textAlign: 'center' }}>2D cell culture, 3D cell culture,  fluorescence microscopy, ELISA, DNA extraction, qPCR. </p>
+                </Col>
+              </Row>
+              <Row style={{ marginBottom: '10px' }}>
+                <Col md={6}>
+                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Engineering techniques: </strong></p>
+                  <p style={{ textAlign: 'center' }}>Rheometry, mechanical testing (MTS), AFM, </p>
+                </Col>
+                <Col md={6}>
+                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Manufacturing: </strong></p>
+                  <p style={{ textAlign: 'center' }}>3D printing (FDM and SLA), laser cutting/engraving </p>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={{ span: 8 }}>
+                  <h4><b>Skills and Achievments</b></h4>
+                </Col>
+                <hr width='100%' />
+              </Row>
+              <Row style={{ marginTop: '10px' }}>
+                <Col md={12}>
+                  <p>Graduated with the Highest Distinction, Deans Honor List Fall/Spring 2015-2019, Hilldale Undergraduate Fellow 2017.</p>
                 </Col>
               </Row>
             </Container>
