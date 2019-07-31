@@ -33,7 +33,6 @@ class BlogForm extends React.Component {
       const postBody = {
         title: document.getElementById('blog-title').value,
         synopsis: document.getElementById('blog-synopsis').value,
-        beginning: document.getElementById('blog-beginning').value,
         tags: document.getElementById('blog-tags').value,
         fulltext: document.getElementById('blog-fulltext').value
       }
@@ -81,14 +80,6 @@ class BlogForm extends React.Component {
                     <Form.Group controlId='synopsis'>
                       <Form.Label>Summary</Form.Label>
                       <Form.Control as='textarea' rows='3' id='blog-synopsis' />
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md={{ span: 8, offset: 2 }}>
-                    <Form.Group controlId='beginning'>
-                      <Form.Label>Preview</Form.Label>
-                      <Form.Control as='textarea' rows='3' id='blog-beginning' />
                     </Form.Group>
                   </Col>
                 </Row>
