@@ -13,11 +13,16 @@ class Blog extends React.Component {
       blogs: null,
       isLoading: true,
       showModal: false,
-      loggedIn: false
+      loggedIn: false,
+      tags: [],
+      tagDetail: false,
+      tag: -1,
+      tagBlogs: []
+
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     fetch('/resources/blog/recent') // eslint-disable-line no-undef
       .then((resp) => {
         return resp.json()
@@ -29,12 +34,31 @@ class Blog extends React.Component {
       .then((resp) => {
         if(resp.status === 200) this.setState({loggedIn: true});
       })
+    fetch('/resources/blog/tags')
+      .then((resp) => resp.json())
+      .then((myJson) => {this.setState({
+        tags: myJson.map((obj) => [obj.ID, obj.tagName])
+      })})
+  }
+
+  componentDidUpdate(){
+    if(this.state.tagDetail && this.state.tag !== -1){
+      fetch('/resources/blog/tag/'+this.state.tag)
+        .then(resp => resp.json())
+        .then(myJSON => {this.setState({tagBlogs: myJSON})})
+    }
   }
 
   render () {
     if (this.state.isLoading) return (<></>)
     else {
       const items = []
+      const buttons = this.state.tags.map((obj) => (
+        <Button
+          variant='dark'
+          onClick={() => this.setState({tagDetail: true, tag: obj[0]})}
+        >{obj[1]}</Button>
+      ))
       for (const [index, value] of this.state.blogs.entries()) { // eslint-disable-line no-unused-vars
         items.push(
           <Carousel.Item as={Container} style={{ cursor: 'pointer' }} onClick={() => this.props.history.push('/blog/' + value.ID)}>
@@ -79,7 +103,7 @@ class Blog extends React.Component {
                 </Row>
               </Container>
               <ButtonGroup>
-                {/* Have a button for all the tags */}
+                {buttons}
               </ButtonGroup>
             </Jumbotron>
             <Footer />
