@@ -40,12 +40,13 @@ const logIn = async function (username, password, res) {
       const token = await jwt.sign({ username: username, name: queryResult[0].name, ID: queryResult[0].ID }, config.secret, { expiresIn: '1h' })
       res.cookie('token', token, { httpOnly: true })
       res.sendStatus(200)
-      conn.end()
     } else {
       res.sendStatus(403)
     }
   } catch (e) {
     log(e)
+  } finally {
+    if (conn) conn.end() // eslint-disable-line no-undef
   }
 }
 const addBlog = async function (token, res, title, synopsis, beginning, tags, fulltext) {
@@ -72,6 +73,8 @@ const addBlog = async function (token, res, title, synopsis, beginning, tags, fu
   } catch (e) {
     log(e)
     res.sendStatus(500)
+  } finally {
+    if (conn) conn.end() // eslint-disable-line no-undef
   }
 }
 const addTags = async function (id, tagsRaw) {
@@ -87,24 +90,22 @@ const addTags = async function (id, tagsRaw) {
     // First insert any new tags into the tags db
     const rows = await conn.query('SELECT tagName FROM tags;') // eslint-disable-line no-unused-vars
     const databaseTags = rows.map(e => e.tagName)
-    console.log(databaseTags)
     const uniqueTags = tags.filter(e => !databaseTags.includes(e))
     const sub = uniqueTags.reduce((all, curr) => all = [...all, [curr]], []) // eslint-disable-line no-return-assign
     const qs = 'INSERT INTO tags (tagName) VALUES (?);'
     // https://stackoverflow.com/questions/37719975/how-to-do-bulk-insert-in-mariadb-using-nodejs
-    console.log(qs, sub)
-    if(sub.length > 0)
-      await conn.batch(qs, sub)
+    if (sub.length > 0) { await conn.batch(qs, sub) }
 
     const postTags = tags.reduce((all, curr) => all = [...all, [id, curr]], [])// eslint-disable-line no-return-assign
     const postTagsQS = 'INSERT INTO postTags(postID, tagID) SELECT ?, ID FROM tags WHERE tagName = ?'
-    console.log(postTagsQS, postTags)
-    //await conn.batch(postTagsQS, postTags)
+    // await conn.batch(postTagsQS, postTags)
     //  get "This command is not supported in the prepared statement protocol yet"
     //  I believe that INSERT ... SELECT is not available in batch
-    postTags.map( async (curr) => { await conn.query(postTagsQS,[...curr])})
+    postTags.map(async (curr) => { await conn.query(postTagsQS, [...curr]) })
   } catch (err) {
     console.log(err)
+  } finally {
+    if (conn) conn.end() // eslint-disable-line no-undef
   }
 }
 app.get('/resources/blog/blog/:id', (req, res) => {
@@ -123,11 +124,12 @@ app.get('/resources/blog/blog/:id', (req, res) => {
           conn.end()
         })
         .catch(err => {
-          console.log(err)
+          log(err)
+          conn.end()
         })
-        .catch(err => {
-          console.log(err)
-        })
+    })
+    .catch(err => {
+      log(err)
     })
 })
 app.get('/resources/blog/recent', (req, res) => {
@@ -148,6 +150,7 @@ app.get('/resources/blog/recent', (req, res) => {
         })
         .catch(err => {
           log(err)
+          conn.end()
         })
     })
     .catch(err => {
@@ -162,13 +165,21 @@ app.get('/resources/blog/tag/:tag', (req, res) => {
     database: 'blog',
     port: 3306
   })
-    .then(conn => conn.query('SELECT posts.* FROM postTags JOIN posts ON posts.ID=postTags.postID where postTags.tagID = ?;', [req.params.tag]))
-    .then(rows => {
-      console.log(rows)
-      res.setHeader('Content-Type', 'application/json')
-      res.json(rows)
+    .then(conn => {
+      conn.query('SELECT posts.* FROM postTags JOIN posts ON posts.ID=postTags.postID where postTags.tagID = ?;', [req.params.tag])
+        .then(rows => {
+          res.setHeader('Content-Type', 'application/json')
+          res.json(rows)
+          conn.end()
+        })
+        .catch(err => {
+          log(err)
+          conn.end()
+        })
     })
-    .catch(err => { console.log(err) })
+    .catch(err => {
+      log(err)
+    })
 })
 app.get('/resources/blog/tags', (req, res) => {
   maria.createConnection({
@@ -178,10 +189,19 @@ app.get('/resources/blog/tags', (req, res) => {
     database: 'blog',
     port: 3306
   })
-    .then(conn => conn.query('SELECT * FROM tags'))
-    .then(rows => {
-      res.setHeader('Content-Type', 'application/json')
-      res.json(rows)
+    .then(conn => {
+      conn.query('SELECT * FROM tags')
+        .then(rows => {
+          res.setHeader('Content-Type', 'application/json')
+          res.json(rows)
+          conn.end()
+        })
+        .catch(err => {
+          log(err)
+          conn.end()
+        })
+    }).catch(err => {
+      log(err)
     })
 })
 app.get('/resources/blog/author/:authorID', (req, res) => {
@@ -192,10 +212,19 @@ app.get('/resources/blog/author/:authorID', (req, res) => {
     database: 'blog',
     port: 3306
   })
-    .then(conn => conn.query('SELECT * FROM posts WHERE authorID=?;', [req.params.authorID]))
-    .then(rows => {
-      res.setHeader('Content-Type', 'application/json')
-      res.json(rows)
+    .then(conn => {
+      conn.query('SELECT * FROM posts WHERE authorID=?;', [req.params.authorID])
+        .then(rows => {
+          res.setHeader('Content-Type', 'application/json')
+          res.json(rows)
+          conn.end()
+        })
+        .catch(err => {
+          log(err)
+          conn.end()
+        })
+    }).catch(err => {
+      log(err)
     })
 })
 app.get('/resources/blog/authors', (req, res) => {
@@ -206,10 +235,19 @@ app.get('/resources/blog/authors', (req, res) => {
     database: 'blog',
     port: 3306
   })
-    .then(conn => conn.query('SELECT * FROM authors;'))
-    .then(rows => {
-      res.setHeader('Content-Type', 'application/json')
-      res.json(rows)
+    .then(conn => {
+      conn.query('SELECT * FROM authors;')
+        .then(rows => {
+          res.setHeader('Content-Type', 'application/json')
+          res.json(rows)
+          conn.end()
+        })
+        .catch(err => {
+          console.log(err)
+          conn.end()
+        })
+    }).catch(err => {
+      console.log(err)
     })
 })
 app.post('/resources/blog/add', (req, res) => {
