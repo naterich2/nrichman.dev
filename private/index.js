@@ -191,9 +191,8 @@ app.get('/resources/blog/tag/:tag', (req, res) => {
     .then(conn => conn.query('SELECT posts.* FROM postTags JOIN posts ON posts.ID=postTags.postID where postTags.tagID = ?;', [req.params.tag]))
     .then(rows => {
       console.log(rows)
-      res.setHeader('Content-Type','application/json');
-      res.json(rows);
-
+      res.setHeader('Content-Type', 'application/json')
+      res.json(rows)
     })
     .catch(err => { console.log(err) })
 })
@@ -211,7 +210,7 @@ app.get('/resources/blog/tags', (req, res) => {
       res.json(rows)
     })
 })
-app.get('/resources/blog/author/:authorID', (req,res) => {
+app.get('/resources/blog/author/:authorID', (req, res) => {
   maria.createConnection({
     host: '172.17.0.1',
     user: 'mysql',
@@ -221,8 +220,8 @@ app.get('/resources/blog/author/:authorID', (req,res) => {
   })
     .then(conn => conn.query('SELECT * FROM posts WHERE authorID=?;', [req.params.authorID]))
     .then(rows => {
-      res.setHeader('Content-Type','application/json')
-      res.json(rows);
+      res.setHeader('Content-Type', 'application/json')
+      res.json(rows)
     })
 })
 app.get('/resources/blog/authors', (req, res) => {
@@ -235,8 +234,8 @@ app.get('/resources/blog/authors', (req, res) => {
   })
     .then(conn => conn.query('SELECT * FROM authors;'))
     .then(rows => {
-      res.setHeader('Content-Type','application/json');
-      res.json(rows);
+      res.setHeader('Content-Type', 'application/json')
+      res.json(rows)
     })
 })
 app.post('/resources/blog/add', (req, res) => {

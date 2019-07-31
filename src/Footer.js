@@ -4,7 +4,6 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Row, Col } from 'react-bootstrap'
 import React from 'react'
-import Bootstrap from 'bootstrap/dist/css/bootstrap.css'
 
 library.add(fab)
 const social = [['linkedin', 'https://www.linkedin.com/in/nathan-richman-b95453124/'], ['github', 'https://github.com/nrichman2'], ['git-square', 'https://git.nrichman.dev/nrichman']]

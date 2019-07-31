@@ -17,7 +17,7 @@ class Resume extends React.Component {
       ['java', 'I used Java for intro to CS, data structures, and AI. I created a replica Minesweeper game, and attempted and failed to make an atomic orbital viewer.  Click to go to my github page to see those projects.', 'https://github.com/naterich2'],
       ['cuttlefish', 'I wrote a driver for a DHT11 temperature and humidity sensor for one of my raspberry pi\'s, and I used C to do microcontroller programming at Caerus', 'https://github.com/naterich2'],
       ['MATLAB', 'I have used MATLAB for data analysis and model fitting during my Hilldale research, and I created a program to detect different life stages in S. Cerevisiae for a computational photography class', 'https://github.com/naterich2']]
-    // eslint-disable no-return-assign
+    /* eslint-disable no-return-assign */
     const programmingHtml = programming.map(([language, description, link]) => {
       if (language === 'MATLAB') {
         return (
@@ -69,7 +69,7 @@ class Resume extends React.Component {
         )
       }
     })
-    // eslint-enable no-return-assign
+    /* eslint-enable no-return-assign */
     return (
       <div className='resume'>
         <div style={{ position: 'relative', backgroundAttachment: 'scroll', width: '100%', backgroundColor: '#282c35' }}>
