@@ -7,9 +7,9 @@ import React from 'react'
 
 library.add(fab)
 const social = [['linkedin', 'https://www.linkedin.com/in/nathan-richman-b95453124/'], ['github', 'https://github.com/nrichman2'], ['git-square', 'https://git.nrichman.dev/nrichman']]
-const logos = social.map(([icon, link]) => {
+const logos = social.map(([icon, link], idx) => {
   return (
-    <a href={link} style={{ flexGrow: '1' }}><FontAwesomeIcon style={{
+    <a href={link} key={"icon-"+idx} style={{ flexGrow: '1' }}><FontAwesomeIcon style={{
       verticalAlign: 'middle',
       padingLeft: '2px',
       paddingRight: '2px',
