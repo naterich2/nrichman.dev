@@ -18,12 +18,12 @@ class BlogViewer extends React.Component {
   }
 
   componentDidMount () {
-    fetch('/resources/blog/blog_id/' + this.props.match.params.id) // eslint-disable-line no-undef
+    fetch('/resources/blog/blog/' + this.props.match.params.id) // eslint-disable-line no-undef
       .then(resp => {
         return resp.json()
       })
       .then(blog => {
-        this.setState({ fulltext: blog.full_text })
+        this.setState({ fulltext: blog.content })
       })
   }
 

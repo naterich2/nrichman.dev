@@ -124,6 +124,8 @@ app.get('/resources/blog/blog/:id', (req, res) => {
         .then(rows => {
           res.setHeader('Content-Type', 'application/json')
           res.json(rows[0])
+          log("New request for blog "+req.params.id+" sending")
+          console.log(rows[0])
           conn.end()
         })
         .catch(err => {
