@@ -77,7 +77,7 @@ class Blog extends React.Component {
               </Row>
               <Row>
                 <Col md={{ span: 4, offset: 4 }}>
-                  <p style={{ color: 'rgb(70,70,70)' }}>By: {value.author}</p>
+                  <p style={{ color: 'rgb(70,70,70)' }}>By: {value.name}</p>
                 </Col>
               </Row>
             </Container>
@@ -97,7 +97,7 @@ class Blog extends React.Component {
               <Container>
                 {this.state.loggedIn && <Row><Col md={2}><Button variant='primary' onClick={() => this.setState({ blogs: this.state.blogs, isLoading: this.state.isLoading, showModal: true })}>Add Blog</Button></Col></Row>}
                 <Row>
-                  <Col md={{ span: 10, offset: 1 }}>
+                  <Col md={{ span: 12 }}>
                     <Carousel>
                       {items}
                     </Carousel>

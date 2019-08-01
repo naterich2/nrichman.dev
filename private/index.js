@@ -148,7 +148,7 @@ app.get('/resources/blog/recent', (req, res) => {
     port: '3306'
   })
     .then(conn => {
-      conn.query('SELECT * FROM posts ORDER BY ts LIMIT 5')
+      conn.query('SELECT posts.*, authors.name FROM posts JOIN authors on authors.ID=posts.authorID ORDER BY ts LIMIT 5')
         .then(rows => {
           res.setHeader('Content-Type', 'application/json')
           // res.json(rows) ??
@@ -173,7 +173,10 @@ app.get('/resources/blog/tag/:tag', (req, res) => {
     port: 3306
   })
     .then(conn => {
-      conn.query('SELECT posts.* FROM postTags JOIN posts ON posts.ID=postTags.postID where postTags.tagID = ?;', [req.params.tag])
+      conn.query("SELECT posts.title, posts.authorID FROM postTags\
+        JOIN posts ON posts.ID=postTags.postID\
+        JOIN authors ON authors.ID=posts.authorID\
+        WHERE postTags.tagID = ?;", [req.params.tag])
         .then(rows => {
           res.setHeader('Content-Type', 'application/json')
           res.json(rows)
