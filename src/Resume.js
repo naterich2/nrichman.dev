@@ -224,7 +224,7 @@ class Resume extends React.Component {
               <Row style={{ marginBottom: '10px' }}>
                 <Col md={6}>
                   <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Programming Languages: </strong></p>
-                  <div style={{ display: 'flex', marginTop: '5' }}>
+                  <div style={{ display: 'flex', marginTop: '5px', marginLeft: '10%', marginRight: '10%' }}>
                     {programmingHtml}
                   </div>
                 </Col>

@@ -9,6 +9,7 @@ const bcrypt = require('bcryptjs')
 const bp = require('body-parser')
 const cookies = require('cookie-parser')
 const util = require('util')
+const helmet = require('helmet')
 
 const writeFile = util.promisify(fs.writeFile)
 const app = express()
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, '../public')))
 app.use(bp.urlencoded({ extended: false }))
 app.use(bp.json())
 app.use(cookies())
+app.use(helmet())
 
 function log (message) {
   console.log(new Date().toLocaleTimeString({ month: 'short',
@@ -124,7 +126,7 @@ app.get('/resources/blog/blog/:id', (req, res) => {
         .then(rows => {
           res.setHeader('Content-Type', 'application/json')
           res.json(rows[0])
-          log("New request for blog "+req.params.id+" sending")
+          log('New request for blog ' + req.params.id + ' sending')
           console.log(rows[0])
           conn.end()
         })
