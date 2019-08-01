@@ -173,10 +173,10 @@ app.get('/resources/blog/tag/:tag', (req, res) => {
     port: 3306
   })
     .then(conn => {
-      conn.query("SELECT posts.title, posts.authorID FROM postTags\
+      conn.query('SELECT posts.title, posts.authorID FROM postTags\
         JOIN posts ON posts.ID=postTags.postID\
         JOIN authors ON authors.ID=posts.authorID\
-        WHERE postTags.tagID = ?;", [req.params.tag])
+        WHERE postTags.tagID = ?;', [req.params.tag])
         .then(rows => {
           res.setHeader('Content-Type', 'application/json')
           res.json(rows)
