@@ -22,7 +22,7 @@ class Blog extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     fetch('/resources/blog/recent') // eslint-disable-line no-undef
       .then((resp) => {
         return resp.json()
@@ -32,20 +32,22 @@ class Blog extends React.Component {
       })
     fetch('/resources/verifyToken') // eslint-disable-line no-undef
       .then((resp) => {
-        if(resp.status === 200) this.setState({loggedIn: true});
+        if (resp.status === 200) this.setState({ loggedIn: true })
       })
-    fetch('/resources/blog/tags')
+    fetch('/resources/blog/tags') // eslint-disable-line no-undef
       .then((resp) => resp.json())
-      .then((myJson) => {this.setState({
-        tags: myJson.map((obj) => [obj.ID, obj.tagName])
-      })})
+      .then((myJson) => {
+        this.setState({
+          tags: myJson.map((obj) => [obj.ID, obj.tagName])
+        })
+      })
   }
 
-  componentDidUpdate(){
-    if(this.state.tagDetail && this.state.tag !== -1){
-      fetch('/resources/blog/tag/'+this.state.tag)
+  componentDidUpdate () {
+    if (this.state.tagDetail && this.state.tag !== -1) {
+      fetch('/resources/blog/tag/' + this.state.tag) // eslint-disable-line no-undef
         .then(resp => resp.json())
-        .then(myJSON => {this.setState({tagBlogs: myJSON})})
+        .then(myJSON => { this.setState({ tagBlogs: myJSON }) })
     }
   }
 
@@ -56,7 +58,7 @@ class Blog extends React.Component {
       const buttons = this.state.tags.map((obj) => (
         <Button
           variant='dark'
-          onClick={() => this.setState({tagDetail: true, tag: obj[0]})}
+          onClick={() => this.setState({ tagDetail: true, tag: obj[0] })}
         >{obj[1]}</Button>
       ))
       for (const [index, value] of this.state.blogs.entries()) { // eslint-disable-line no-unused-vars
