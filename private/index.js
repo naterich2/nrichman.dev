@@ -26,6 +26,7 @@ function log (message) {
     second: '2-digit' }) + ': ' + message)
 }
 const logIn = async function (username, password, res) {
+  let conn
   try {
     const conn = await maria.createConnection({
       host: '172.17.0.1',
@@ -46,10 +47,11 @@ const logIn = async function (username, password, res) {
   } catch (e) {
     log(e)
   } finally {
-    if (conn) conn.end() // eslint-disable-line no-undef
+    if (conn) conn.end()
   }
 }
 const addBlog = async function (token, res, title, synopsis, beginning, tags, fulltext) {
+  let conn
   try {
     const authorized = await jwt.verify(token, config.secret)
     const conn = await maria.createConnection({
@@ -74,10 +76,11 @@ const addBlog = async function (token, res, title, synopsis, beginning, tags, fu
     log(e)
     res.sendStatus(500)
   } finally {
-    if (conn) conn.end() // eslint-disable-line no-undef
+    if (conn) conn.end()
   }
 }
 const addTags = async function (id, tagsRaw) {
+  let conn
   const tags = tagsRaw.split(',').map(e => e.trim())
   try {
     const conn = await maria.createConnection({
@@ -105,7 +108,7 @@ const addTags = async function (id, tagsRaw) {
   } catch (err) {
     console.log(err)
   } finally {
-    if (conn) conn.end() // eslint-disable-line no-undef
+    if (conn) conn.end()
   }
 }
 app.get('/resources/blog/blog/:id', (req, res) => {
