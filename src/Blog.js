@@ -104,11 +104,24 @@ class Blog extends React.Component {
                     </Carousel>
                   </Col>
                 </Row>
+                <Row>
+                  <Col md={{span: 6, offset: 3}}>
+                    <h5 style={{textAlign: 'center'}}> Or, browse by blog tag:</h5>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={{span: 12}}>
+                    <ButtonGroup>
+                      {buttons}
+                    </ButtonGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={12}>
+                    {this.state.tag !== -1 && <BlogList tagID={this.state.tag} />}
+                  </Col>
+                </Row>
               </Container>
-              <ButtonGroup>
-                {buttons}
-              </ButtonGroup>
-              {this.state.tag !== -1 && <BlogList tagID={this.state.tag} />}
             </Jumbotron>
             <Footer />
           </div>

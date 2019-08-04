@@ -1,8 +1,7 @@
 import './Home.css'
 import React from 'react'
-import { Container, Row, Col, ListGroup } from 'react-bootstrap'
-import { withRouter } from 'react-router-dom'
 import { ListGroup } from 'react-bootstrap'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 class BlogList extends React.Component {
@@ -51,7 +50,6 @@ class BlogList extends React.Component {
 }
 
 BlogList.propTypes = {
-<<====
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
