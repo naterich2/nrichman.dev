@@ -5,6 +5,7 @@ import Live from './Live.js'
 import MainNav from './MainNav.js'
 import Footer from './Footer.js'
 import BlogForm from './BlogForm.js'
+import BlogList from './BlogList.js'
 
 class Blog extends React.Component {
   constructor (props) {
@@ -107,6 +108,7 @@ class Blog extends React.Component {
               <ButtonGroup>
                 {buttons}
               </ButtonGroup>
+              {this.state.tag !== -1 && <BlogList tagID={this.state.tag} />}
             </Jumbotron>
             <Footer />
           </div>

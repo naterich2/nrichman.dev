@@ -1,6 +1,8 @@
 import './Home.css'
 import React from 'react'
 import { Container, Row, Col, ListGroup } from 'react-bootstrap'
+import { withRouter } from 'react-router-dom'
+import { ListGroup } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 class BlogList extends React.Component {
@@ -8,7 +10,7 @@ class BlogList extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      blogs: {}
+      blogs: []
     }
   }
 
@@ -23,30 +25,36 @@ class BlogList extends React.Component {
   }
 
   render () {
-    const list = blog.map((entry) => {
+    if (this.state.blogs) {
+      console.log(this.state.blogs)
+      const list = this.state.blogs.map((entry) => {
+        return (
+          <ListGroup.Item as='li' key={entry.ID} onClick={() => {
+            this.props.history.push('/blog/' + entry.ID)
+          }}>
+            <h5>{entry.title}</h5>
+            <p>By: {entry.name}</p>
+          </ListGroup.Item>
+        )
+      })
       return (
-        <ListGroup.Item as='li' key={entry.ID} onClick={() => {
-          this.props.history.push('/blog/'+entry.ID);
-        }}>
-          <h5>{entry.title}</h5>
-          <p>By: {entry.name}</p>
-        </ListGroup.Item>
+        <div className='blogList'>
+          <ListGroup as='ul'>
+            {list}
+          </ListGroup>
+        </div>
       )
-    })
-    return (
-      <div className='blogList'>
-        <ListGroup as='ul'>
-          {list}
-        </ListGroup>
-      </div>
-    )
+    } else {
+      return (<div />)
+    }
   }
 }
 
 BlogList.propTypes = {
-  match: Proptypes.object.isRequired,
-  location: Proptypes.object.isRequired,
-  history: Proptypes.object.isRequired,
+<<====
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   tagID: PropTypes.number.isRequired
 }
 
