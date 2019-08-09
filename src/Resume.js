@@ -223,24 +223,30 @@ class Resume extends React.Component {
               </Row>
               <Row style={{ marginBottom: '10px' }}>
                 <Col md={6}>
+                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Biological techniques: </strong></p>
+                  <p style={{ textAlign: 'center' }}>2D cell culture, 3D cell culture,  fluorescence microscopy, ELISA, DNA extraction, qPCR. </p>
+                </Col>
+                <Col md={6}>
+                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Engineering techniques: </strong></p>
+                  <p style={{ textAlign: 'center' }}>Rheometry, mechanical testing (MTS), AFM, </p>
+                </Col>
+              </Row>
+              <Row style={{ marginBottom: '10px' }}>
+                <Col md={6}>
                   <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Programming Languages: </strong></p>
                   <div style={{ display: 'flex', marginTop: '5px', marginLeft: '10%', marginRight: '10%' }}>
                     {programmingHtml}
                   </div>
                 </Col>
                 <Col md={6}>
-                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Biological techniques: </strong></p>
-                  <p style={{ textAlign: 'center' }}>2D cell culture, 3D cell culture,  fluorescence microscopy, ELISA, DNA extraction, qPCR. </p>
+                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Manufacturing: </strong></p>
+                  <p style={{ textAlign: 'center' }}>3D printing (FDM and SLA), laser cutting/engraving </p>
                 </Col>
               </Row>
               <Row style={{ marginBottom: '10px' }}>
-                <Col md={6}>
-                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Engineering techniques: </strong></p>
-                  <p style={{ textAlign: 'center' }}>Rheometry, mechanical testing (MTS), AFM, </p>
-                </Col>
-                <Col md={6}>
-                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Manufacturing: </strong></p>
-                  <p style={{ textAlign: 'center' }}>3D printing (FDM and SLA), laser cutting/engraving </p>
+                <Col md={{span: 8, offset: 2}}>
+                  <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Software: </strong></p>
+                  <p>Microsoft Office (including VBA development), SolidWorks, R/RStudio, Simplify3D, Ultimaker Cura, MATLAB, LaTeX, git, Docker, NGINX, Ansible, MySQL/MariaDB, MongoDB</p>
                 </Col>
               </Row>
               <Row>
@@ -251,7 +257,7 @@ class Resume extends React.Component {
               </Row>
               <Row style={{ marginTop: '10px' }}>
                 <Col md={12}>
-                  <p>Graduated with the Highest Distinction, Deans Honor List Fall/Spring 2015-2019, Hilldale Undergraduate Fellow 2017.</p>
+                  <p>Graduated with the Highest Distinction, Deans Honor List Fall/Spring 2015-2019, Hilldale Undergraduate Fellow 2017, Biomedical Student Advisory Committee (BSAC) exec committe (18/19), BSAC co-chair (19/20)</p>
                 </Col>
               </Row>
             </Container>
