@@ -39,7 +39,7 @@ class Blog extends React.Component {
       .then((resp) => resp.json())
       .then((myJson) => {
         this.setState({
-          tags: myJson.map((obj) => [obj.ID, obj.tagName])
+          tags: myJson.map((obj) => [obj.posts, obj.ID, obj.tagName])
         })
       })
   }
@@ -59,8 +59,8 @@ class Blog extends React.Component {
       const buttons = this.state.tags.map((obj) => (
         <Button
           variant='dark'
-          onClick={() => this.setState({ tagDetail: true, tag: obj[0] })}
-        >{obj[1]}</Button>
+          onClick={() => this.setState({ tagDetail: true, tag: obj[1] })}
+        >{obj[2]+" ("+obj[0]+")"}</Button>
       ))
       for (const [index, value] of this.state.blogs.entries()) { // eslint-disable-line no-unused-vars
         items.push(

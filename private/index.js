@@ -200,7 +200,7 @@ app.get('/resources/blog/tags', (req, res) => {
     port: 3306
   })
     .then(conn => {
-      conn.query('SELECT * FROM tags')
+      conn.query('SELECT COUNT(postTags.postID) AS posts, tags.* FROM postTags JOIN tags ON postTags.tagID=tags.ID GROUP BY tags.ID;')
         .then(rows => {
           res.setHeader('Content-Type', 'application/json')
           res.json(rows)
