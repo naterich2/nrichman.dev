@@ -122,18 +122,22 @@ app.get('/resources/blog/blog/:id', (req, res) => {
     port: 3306
   })
     .then(conn => {
-      conn.query('SELECT * FROM posts WHERE ID=' + req.params.id + ';')
-        .then(rows => {
-          res.setHeader('Content-Type', 'application/json')
-          res.json(rows[0])
-          log('New request for blog ' + req.params.id + ' sending')
-          console.log(rows[0])
-          conn.end()
-        })
-        .catch(err => {
-          log(err)
-          conn.end()
-        })
+      if(req.params.id){
+        conn.query('SELECT * FROM posts WHERE ID=' + req.params.id + ';')
+          .then(rows => {
+            res.setHeader('Content-Type', 'application/json')
+            res.json(rows[0])
+            log('New request for blog ' + req.params.id + ' sending')
+            console.log(rows[0])
+            conn.end()
+          })
+          .catch(err => {
+            log(err)
+            conn.end()
+          })
+      } else {
+        log(req.url+" no ID parameter supplied")
+      }
     })
     .catch(err => {
       log(err)
@@ -173,9 +177,9 @@ app.get('/resources/blog/tag/:tag', (req, res) => {
     port: 3306
   })
     .then(conn => {
-      conn.query('SELECT posts.title, posts.authorID FROM postTags\
-        JOIN posts ON posts.ID=postTags.postID\
-        JOIN authors ON authors.ID=posts.authorID\
+      conn.query('SELECT posts.title, posts.ID, authors.name FROM postTags\
+        JOIN posts ON postTags.postID=posts.ID\
+        JOIN authors ON posts.authorID=authors.ID\
         WHERE postTags.tagID = ?;', [req.params.tag])
         .then(rows => {
           res.setHeader('Content-Type', 'application/json')

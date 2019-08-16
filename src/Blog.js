@@ -7,6 +7,7 @@ import Footer from './Footer.js'
 import BlogForm from './BlogForm.js'
 import BlogList from './BlogList.js'
 
+
 class Blog extends React.Component {
   constructor (props) {
     super(props)
@@ -19,11 +20,11 @@ class Blog extends React.Component {
       tagDetail: false,
       tag: -1,
       tagBlogs: []
-
     }
   }
 
   componentDidMount () {
+    console.log("getting recent blogs")
     fetch('/resources/blog/recent') // eslint-disable-line no-undef
       .then((resp) => {
         return resp.json()
@@ -31,10 +32,12 @@ class Blog extends React.Component {
       .then((data) => {
         this.setState({ blogs: data, isLoading: false })
       })
+    console.log("verifying token")
     fetch('/resources/verifyToken') // eslint-disable-line no-undef
       .then((resp) => {
         if (resp.status === 200) this.setState({ loggedIn: true })
       })
+    console.log("geting blog tags")
     fetch('/resources/blog/tags') // eslint-disable-line no-undef
       .then((resp) => resp.json())
       .then((myJson) => {
@@ -42,14 +45,6 @@ class Blog extends React.Component {
           tags: myJson.map((obj) => [obj.posts, obj.ID, obj.tagName])
         })
       })
-  }
-
-  componentDidUpdate () {
-    if (this.state.tagDetail && this.state.tag !== -1) {
-      fetch('/resources/blog/tag/' + this.state.tag) // eslint-disable-line no-undef
-        .then(resp => resp.json())
-        .then(myJSON => { this.setState({ tagBlogs: myJSON }) })
-    }
   }
 
   render () {
@@ -60,7 +55,7 @@ class Blog extends React.Component {
         <ListGroup.Item
           action
           style={{textAlign: 'center'}}
-          onClick={() => this.setState({ tagDetail: true, tag: obj[1] })}
+          onClick={() => this.setState({tagDetail: true, tag:obj[1]})}
         >{obj[2]+" ("+obj[0]+")"}</ListGroup.Item>
       ))
       for (const [index, value] of this.state.blogs.entries()) { // eslint-disable-line no-unused-vars

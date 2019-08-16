@@ -13,7 +13,7 @@ class BlogList extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     fetch('/resources/blog/tag/' + this.props.tagID) // eslint-disable-line no-undef
       .then(resp => {
         return resp.json()
@@ -22,13 +22,24 @@ class BlogList extends React.Component {
         this.setState({ blogs: blog })
       })
   }
+  componentDidUpdate(prevProps,prevState){
+    if(this.props.tagID !== prevProps.tagID){ // Tag ID changed
+      fetch('/resources/blog/tag/' + this.props.tagID) // eslint-disable-line no-undef
+        .then(resp => {
+          return resp.json()
+        })
+        .then(blog => {
+          this.setState({ blogs: blog })
+        })
+    }
+  }
 
   render () {
     if (this.state.blogs) {
       console.log(this.state.blogs)
       const list = this.state.blogs.map((entry) => {
         return (
-          <ListGroup.Item as='li' key={entry.ID} onClick={() => {
+          <ListGroup.Item as='li' key={entry.ID} action onClick={() => {
             this.props.history.push('/blog/' + entry.ID)
           }}>
             <h5>{entry.title}</h5>

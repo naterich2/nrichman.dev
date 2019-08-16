@@ -18,6 +18,7 @@ class BlogViewer extends React.Component {
   }
 
   componentDidMount () {
+    console.log(this.props.match.params.id)
     fetch('/resources/blog/blog/' + this.props.match.params.id) // eslint-disable-line no-undef
       .then(resp => {
         return resp.json()
