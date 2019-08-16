@@ -1,5 +1,5 @@
 import './Home.css'
-import { Carousel, ButtonGroup, Button, Jumbotron, Container, Row, Col } from 'react-bootstrap'
+import { Carousel, ListGroup, Button, Jumbotron, Container, Row, Col } from 'react-bootstrap'
 import React from 'react'
 import Live from './Live.js'
 import MainNav from './MainNav.js'
@@ -56,11 +56,12 @@ class Blog extends React.Component {
     if (this.state.isLoading) return (<></>)
     else {
       const items = []
-      const buttons = this.state.tags.map((obj) => (
-        <Button
-          variant='dark'
+      const tags = this.state.tags.map((obj) => (
+        <ListGroup.Item
+          action
+          style={{textAlign: 'center'}}
           onClick={() => this.setState({ tagDetail: true, tag: obj[1] })}
-        >{obj[2]+" ("+obj[0]+")"}</Button>
+        >{obj[2]+" ("+obj[0]+")"}</ListGroup.Item>
       ))
       for (const [index, value] of this.state.blogs.entries()) { // eslint-disable-line no-unused-vars
         items.push(
@@ -110,10 +111,10 @@ class Blog extends React.Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col md={{span: 12}}>
-                    <ButtonGroup>
-                      {buttons}
-                    </ButtonGroup>
+                  <Col md={{span: 6, offset:3}}>
+                    <ListGroup>
+                      {tags}
+                    </ListGroup>
                   </Col>
                 </Row>
                 <Row>
