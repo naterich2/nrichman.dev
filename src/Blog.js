@@ -63,18 +63,18 @@ class Blog extends React.Component {
           <Carousel.Item as={Container} style={{ cursor: 'pointer' }} onClick={() => this.props.history.push('/blog/' + value.ID)}>
             <Container style={{ marginBottom: '10%' }}>
               <Row>
-                <Col md={{ span: 4, offset: 4 }}>
-                  <h3 style={{ color: 'rgb(70,70,70)' }}>{value.title}</h3>
+                <Col md={{ span: 6, offset: 3 }}>
+                  <h3 style={{ color: 'rgb(70,70,70)', textAlign: 'center' }}>{value.title}</h3>
                 </Col>
               </Row>
               <Row>
-                <Col md={{ span: 4, offset: 4 }}>
-                  <p style={{ color: 'rgb(70,70,70)' }}>{value.synopsis}</p>
+                <Col md={{ span: 8, offset: 2 }}>
+                  <p style={{ color: 'rgb(70,70,70)', textAlign: 'center' }}>{value.synopsis}</p>
                 </Col>
               </Row>
               <Row>
-                <Col md={{ span: 4, offset: 4 }}>
-                  <p style={{ color: 'rgb(70,70,70)' }}>By: {value.name}</p>
+                <Col md={{ span: 8, offset: 2 }}>
+                  <p style={{ color: 'rgb(70,70,70)', textAlign: 'center' }}>By: {value.name}</p>
                 </Col>
               </Row>
             </Container>
@@ -93,6 +93,11 @@ class Blog extends React.Component {
             <Jumbotron style={{ left: '15%', width: '70%', position: 'relative' }}>
               <Container>
                 {this.state.loggedIn && <Row><Col md={2}><Button variant='primary' onClick={() => this.setState({ blogs: this.state.blogs, isLoading: this.state.isLoading, showModal: true })}>Add Blog</Button></Col></Row>}
+                <Row style={{marginBottom: '10px'}}>
+                  <Col md={{span: 6,offset:3}}>
+                    <h4 style={{textAlign: 'center'}}>View Recent Blogs: </h4>
+                  </Col>
+                </Row>
                 <Row>
                   <Col md={{ span: 12 }}>
                     <Carousel>
