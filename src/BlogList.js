@@ -1,7 +1,7 @@
 import './Home.css'
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import { ListGroup } from 'react-bootstrap'
+import { Modal, ListGroup, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 class BlogList extends React.Component {
@@ -48,11 +48,19 @@ class BlogList extends React.Component {
         )
       })
       return (
-        <div className='blogList'>
-          <ListGroup as='ul'>
-            {list}
-          </ListGroup>
-        </div>
+        <Modal show={this.props.show}>
+          <Modal.Header>
+            <Modal.Title>Detail</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <ListGroup as='ul'>
+              {list}
+            </ListGroup>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button  variant='primary' onClick={this.props.close}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       )
     } else {
       return (<div />)

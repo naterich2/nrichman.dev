@@ -1,5 +1,5 @@
 import './Home.css'
-import { Carousel, ListGroup, Button, Jumbotron, Container, Row, Col } from 'react-bootstrap'
+import { Carousel, ListGroup, Button, ButtonGroup, Jumbotron, Container, Row, Col } from 'react-bootstrap'
 import React from 'react'
 import Live from './Live.js'
 import MainNav from './MainNav.js'
@@ -15,6 +15,7 @@ class Blog extends React.Component {
       blogs: null,
       isLoading: true,
       showModal: false,
+      showTagModal: false,
       loggedIn: false,
       tags: [],
       tagDetail: false,
@@ -52,16 +53,15 @@ class Blog extends React.Component {
     else {
       const items = []
       const tags = this.state.tags.map((obj) => (
-        <ListGroup.Item
-          action
+        <Button variant="link"
           style={{textAlign: 'center'}}
-          onClick={() => this.setState({tagDetail: true, tag:obj[1]})}
-        >{obj[2]+" ("+obj[0]+")"}</ListGroup.Item>
+          onClick={() => this.setState({tagDetail: true, tag:obj[1], showTagModal: true})}
+        >{obj[2]+" ("+obj[0]+")"}</Button>
       ))
       for (const [index, value] of this.state.blogs.entries()) { // eslint-disable-line no-unused-vars
         items.push(
-          <Carousel.Item as={Container} style={{ cursor: 'pointer' }} onClick={() => this.props.history.push('/blog/' + value.ID)}>
-            <Container style={{ marginBottom: '10%' }}>
+          <ListGroup.Item as={Container} style={{ cursor: 'pointer' }} action onClick={() => this.props.history.push('/blog/' + value.ID)}>
+            <Container>
               <Row>
                 <Col md={{ span: 6, offset: 3 }}>
                   <h3 style={{ color: 'rgb(70,70,70)', textAlign: 'center' }}>{value.title}</h3>
@@ -78,16 +78,20 @@ class Blog extends React.Component {
                 </Col>
               </Row>
             </Container>
-          </Carousel.Item>
+          </ListGroup.Item>
         )
       }
       const onClose = () => {
-        this.setState({ blogs: this.state.blogs, isLoading: this.state.isLoading, showModal: false })
+        this.setState({ showModal: false })
+      }
+      const closeTagModal = () => {
+        this.setState({ showTagModal: false })
       }
       return (
         <div className='home'>
           <Live />
           <BlogForm close={onClose.bind(this)} show={this.state.showModal} />
+          <BlogList tagID={this.state.tag} close={closeTagModal.bind(this)} show={this.state.showTagModal} />}
           <div style={{ position: 'absolute', backgroundAttachment: 'scroll', top: '70%', width: '100%', backgroundColor: '#282c35' }}>
             <MainNav />
             <Jumbotron style={{ left: '15%', width: '70%', position: 'relative' }}>
@@ -99,28 +103,19 @@ class Blog extends React.Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col md={{ span: 12 }}>
-                    <Carousel>
-                      {items}
-                    </Carousel>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md={{span: 6, offset: 3}}>
-                    <h5 style={{textAlign: 'center'}}> Or, browse by blog tag:</h5>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md={{span: 6, offset:3}}>
+                  <Col md={{ span: 10 }}>
                     <ListGroup>
-                      {tags}
+                      {items}
                     </ListGroup>
                   </Col>
+                  <Col md={{span: 2}} style={{textAlign: 'center'}}>
+                    <h5 style={{textAlign: 'center'}}> Or, browse by blog tag:</h5>
+                    <ButtonGroup vertical>
+                      {tags}
+                    </ButtonGroup>
+                  </Col>
                 </Row>
                 <Row>
-                  <Col md={12}>
-                    {this.state.tag !== -1 && <BlogList tagID={this.state.tag} />}
-                  </Col>
                 </Row>
               </Container>
             </Jumbotron>
