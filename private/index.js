@@ -128,7 +128,6 @@ app.get('/resources/blog/blog/:id', (req, res) => {
             res.setHeader('Content-Type', 'application/json')
             res.json(rows[0])
             log('New request for blog ' + req.params.id + ' sending')
-            console.log(rows[0])
             conn.end()
           })
           .catch(err => {
@@ -177,7 +176,7 @@ app.get('/resources/blog/tag/:tag', (req, res) => {
     port: 3306
   })
     .then(conn => {
-      conn.query('SELECT posts.title, posts.ID, authors.name FROM postTags\
+      conn.query('SELECT posts.*, authors.name FROM postTags\
         JOIN posts ON postTags.postID=posts.ID\
         JOIN authors ON posts.authorID=authors.ID\
         WHERE postTags.tagID = ?;', [req.params.tag])
