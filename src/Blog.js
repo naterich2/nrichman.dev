@@ -6,6 +6,8 @@ import MainNav from './MainNav.js'
 import Footer from './Footer.js'
 import BlogForm from './BlogForm.js'
 import BlogList from './BlogList.js'
+import ReactMarkdown from 'react-markdown'
+import CodeBlock from './subs/CodeBlock.js'
 
 
 class Blog extends React.Component {
@@ -59,6 +61,8 @@ class Blog extends React.Component {
         >{obj[2]+" ("+obj[0]+")"}</Button>
       ))
       for (const [index, value] of this.state.blogs.entries()) { // eslint-disable-line no-unused-vars
+        let preview_raw = value.content.substring(0,200)
+        let preview = preview_raw.replace(/#.*\n/, '')
         items.push(
           <ListGroup.Item as={Container} style={{ cursor: 'pointer' }} action onClick={() => this.props.history.push('/blog/' + value.ID)}>
             <Container>
@@ -75,6 +79,12 @@ class Blog extends React.Component {
               <Row>
                 <Col md={{ span: 8, offset: 2 }}>
                   <p style={{ color: 'rgb(70,70,70)', textAlign: 'center' }}>By: {value.name}</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={{ span: 8, offset: 2 }}>
+                  <p style={{ color: 'rgb(70,70,70)', textAlign: 'center' }}><strong>Preview: </strong></p>
+                  <ReactMarkdown source={preview} renderers={{code: CodeBlock}} />
                 </Col>
               </Row>
             </Container>
