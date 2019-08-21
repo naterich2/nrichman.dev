@@ -99,12 +99,10 @@ class Resume extends React.Component {
               </Row>
               <Row>
                 <Col md={{ span: 12 }}>
-                  <p>I am an undergraduate student looking to contribute to biomedical research and development in a technical setting. I
-      am fascinated by many areas of biomedical engineering including electronics, mechanics, biochemistry, and computer
-      science/informatics. In order to learn more in these fields I work as a network engineer in the Division of IT at UW-
-      Madison and take computer science classes for a minor, I worked in a mechanical engineering lab, and I major in
-      Biomedical Engineering. I love to learn, and challenging problems inspire my curiosity, because of this I am a quick
-      learner, and I have demonstrated my ability to work in a fast paced environment.</p>
+                  <p>I am an graduate student looking to contribute to biomedical research and development in a technical setting. I
+      am fascinated by many areas of biomedical engineering including tissue engineering, biomechanics, biosensor development, and how computer
+      science and informatics can be applied to biotechnology. I have gained experience in these fields by working as an intern at an FDA regulated class II medical device company, at a microbiome bioinformatics company, and as a network engineer in the Division of IT at UW-
+      Madison.  Additionally, I have furthered my knowledge in these fields by conducting funded novel research in a mechanical engineering lab, pursuing a Masters degree in biomedical engineering, and working on projects related to computer science and electronics for fun.  I love to learn, and challenging problems inspire my curiosity. This makes me a quick learner and gives me a desire to work in a fast paced, dynamic environment.</p>
                 </Col>
               </Row>
               <Row>
@@ -135,7 +133,7 @@ class Resume extends React.Component {
               </Row>
               <Row>
                 <Col md={{ span: 3 }}>
-                  <h4><b>Work Experience</b></h4>
+                  <h4><b>Professional Experience</b></h4>
                 </Col>
                 <hr width='100%' />
               </Row>
@@ -143,7 +141,7 @@ class Resume extends React.Component {
                 <Row>
                   <Col md={{ span: 8 }}>
                     <p><b>R&D Intern</b></p>
-                    <p><i>Caeurs Corp.</i>, Arden Hills, MN</p>
+                    <p><i>Caerus Corp./Orthocor Medical</i>, Arden Hills, MN</p>
                   </Col>
                   <Col md={{ span: 3, offset: 1 }}>
                     <p className='date'>May 2018 - August 2018</p>
@@ -151,7 +149,7 @@ class Resume extends React.Component {
                 </Row>
                 <Row>
                   <Col style={{ marginLeft: '2%', flex: '0 0 98%', maxWidth: '98%' }}>
-                    <p>Led prototyping for a rework of an existing class II medical device, created technical drawings and specs to send to the device manufacturer.  Implemented customer feedback and receiving inspection automation tasks using Microsoft Visual Basic for Word and Excel.  Rewrote microcontroller code for existing medical device product line.  Assisted with various small products when needed.</p>
+                    <p>I led prototyping for a rework of an existing class II medical device, and created technical drawings and specifications to send to the device manufacturer.  Implemented customer feedback and receiving inspection automation tasks using Microsoft Visual Basic for Word and Excel.  Rewrote microcontroller code for existing medical device product line.  Worked with vendors and labs to source manufacturing materials and coordinate ASTM testing, and developed new compliance testing procedures.</p>
                   </Col>
                 </Row>
               </div>
@@ -167,7 +165,7 @@ class Resume extends React.Component {
                 </Row>
                 <Row>
                   <Col style={{ marginLeft: '2%', flex: '0 0 98%', maxWidth: '98%' }}>
-                    <p>Designed and implemented a system to deploy and maintain hundreds of raspberry pi agents to be used as user network monitoring endpoints.  Gained experience with Infoblox DDI and Cisco switching and routing to create a PXE boot network.  Used Ansible, as well as python and bash scripts for management and automation.  Gained additional experience using NodeJS and MySQL to adapt new production software to existing systems. </p>
+                    <p>I Designed and implemented a system to deploy and maintain hundreds of raspberry pi agents to be used as user network monitoring endpoints.  Gained experience with Infoblox DDI and Cisco switching and routing to create a PXE boot network.  Used Ansible, as well as python and bash scripts for management and automation.  Gained additional experience using NodeJS and MySQL to adapt new production software to existing systems. </p>
                   </Col>
                 </Row>
               </div>
@@ -183,7 +181,7 @@ class Resume extends React.Component {
                 </Row>
                 <Row>
                   <Col style={{ marginLeft: '2%', flex: '0 0 98%', maxWidth: '98%' }}>
-                    <p>Lead developer on a small team working to create a secure customer web portal using NodeJS, Meteor, React,
+                    <p>I lead development on a small team working to create a secure customer web portal using NodeJS, Meteor, React,
       d3, Docker, python, and NGINX.  Contributed to wet lab processes by helping with qPCR, DNA
       extraction and library preparation for Illumina sequencing.  Learned about and gained experience using lab
       techniques for high throughput DNA processing and sequencing.</p>
@@ -199,7 +197,21 @@ class Resume extends React.Component {
               <div style={{ marginBottom: '5px' }}>
                 <Row>
                   <Col md={{ span: 8 }}>
-                    <p><b><a href='/resources/biofilms'>Investigation of Bacterial Biofilms Growth Response to Repeated Cyclical Loading</a></b></p>
+                    <p><b>Intra-nasal support and saline diffusion device</b></p>
+                    <p><i>BME 400/401 - Senior Design</i>, Prof. Mitch Tyler, Biomedical Engineering, UW-Madison</p>
+                  </Col>
+                  <Col md={{ span: 3, offset: 1 }}>
+                    <p className='date'>September 2018 - May 2019</p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col style={{ marginLeft: '2%', flex: '0 0 98%', maxWidth: '98%' }}>
+                    <p>Worked on a small team to develop a prototype device for the prevention and alleviation of cold and allergy symptoms.  The device worked by both maintaining structural integrity of the nasal passage and diffusing saline to help break up mucus build-ups.</p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={{ span: 8 }}>
+                    <p><b><a href='/resources/resume/biofilms.pdf'>Investigation of Bacterial Biofilms Growth Response to Repeated Cyclical Loading</a></b></p>
                     <p><i>Hilldale Undergraduate Research Fellowship</i>, Melih Eriten, Mechanical Engineering, UW-Madison</p>
                   </Col>
                   <Col md={{ span: 3, offset: 1 }}>
@@ -217,11 +229,11 @@ class Resume extends React.Component {
               </div>
               <Row>
                 <Col md={{ span: 8 }}>
-                  <h4><b>Skills and Achievments</b></h4>
+                  <h4><b>Skills</b></h4>
                 </Col>
                 <hr width='100%' />
               </Row>
-              <Row style={{ marginBottom: '10px' }}>
+              <Row style={{ marginBottom: '20px' }}>
                 <Col md={6}>
                   <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Biological techniques: </strong></p>
                   <p style={{ textAlign: 'center' }}>2D cell culture, 3D cell culture,  fluorescence microscopy, ELISA, DNA extraction, qPCR. </p>
@@ -231,7 +243,7 @@ class Resume extends React.Component {
                   <p style={{ textAlign: 'center' }}>Rheometry, mechanical testing (MTS), AFM, </p>
                 </Col>
               </Row>
-              <Row style={{ marginBottom: '10px' }}>
+              <Row style={{ marginBottom: '20px' }}>
                 <Col md={6}>
                   <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Programming Languages: </strong></p>
                   <div style={{ display: 'flex', marginTop: '5px', marginLeft: '10%', marginRight: '10%' }}>
@@ -240,18 +252,18 @@ class Resume extends React.Component {
                 </Col>
                 <Col md={6}>
                   <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Manufacturing: </strong></p>
-                  <p style={{ textAlign: 'center' }}>3D printing (FDM and SLA), laser cutting/engraving </p>
+                  <p style={{ textAlign: 'center' }}>3D printing (FDM and SLA), laser cutting/engraving, MIG welding, metalwork (mill/lathe), woodwork</p>
                 </Col>
               </Row>
               <Row style={{ marginBottom: '10px' }}>
-                <Col md={{span: 8, offset: 2}}>
+                <Col md={{span: 6, offset: 3}}>
                   <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Software: </strong></p>
                   <p>Microsoft Office (including VBA development), SolidWorks, R/RStudio, Simplify3D, Ultimaker Cura, MATLAB, LaTeX, git, Docker, NGINX, Ansible, MySQL/MariaDB, MongoDB</p>
                 </Col>
               </Row>
               <Row>
                 <Col md={{ span: 8 }}>
-                  <h4><b>Skills and Achievments</b></h4>
+                  <h4><b>Achievments</b></h4>
                 </Col>
                 <hr width='100%' />
               </Row>

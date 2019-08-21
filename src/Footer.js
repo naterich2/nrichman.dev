@@ -25,7 +25,7 @@ function Footer () {
       <Container style={{ width: '40%' }}>
         <Row>
           <Col md={{ span: 4, offset: 4 }}>
-            <h5 style={{ textAlign: 'center' }}>Nate Richman</h5>
+            <h5 style={{ textAlign: 'center' }}><a href="mailto:nate@nrichman.dev">Nate Richman</a></h5>
           </Col>
         </Row>
         <Row>
