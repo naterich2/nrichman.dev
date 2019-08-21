@@ -263,6 +263,18 @@ app.get('/resources/blog/authors', (req, res) => {
       console.log(err)
     })
 })
+app.get('/resources/resume/:file', (req, res) => {
+  let myPath = path.join(__dirname, '/resume/'+req.params.file)
+  fs.stat(myPath, (err, stats)=> {
+    if(err) {
+      log('Request for file: '+req.params.file+" , file not found, sending 404")
+      res.sendStatus(404)
+    } else {
+      res.setHeader('Content-Type', mime.getType(myPath)
+      res.sendFile(myPath)
+    }
+  })
+})
 app.post('/resources/blog/add', (req, res) => {
   const token = req.cookies.token
   console.log(req.body, req.cookies)
