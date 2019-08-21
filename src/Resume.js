@@ -256,7 +256,7 @@ class Resume extends React.Component {
                 </Col>
               </Row>
               <Row style={{ marginBottom: '10px' }}>
-                <Col md={{span: 6, offset: 3}}>
+                <Col md={{ span: 6, offset: 3 }}>
                   <p style={{ textAlign: 'center', marginBottom: '5px' }}><strong>Software: </strong></p>
                   <p>Microsoft Office (including VBA development), SolidWorks, R/RStudio, Simplify3D, Ultimaker Cura, MATLAB, LaTeX, git, Docker, NGINX, Ansible, MySQL/MariaDB, MongoDB</p>
                 </Col>

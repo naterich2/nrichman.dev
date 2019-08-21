@@ -13,7 +13,7 @@ class MainNav extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     fetch('/resources/verifyToken') // eslint-disable-line no-undef
       .then(resp => {
         if (resp.status === 200) {
@@ -30,8 +30,9 @@ class MainNav extends React.Component {
         }
       })
   }
-  componentDidUpdate(prevProps, prevState) {
-    if(prevState.loggedIn === false){ //User logged in, update username state
+
+  componentDidUpdate (prevProps, prevState) {
+    if (prevState.loggedIn === false) { // User logged in, update username state
       fetch('/resources/verifyToken') // eslint-disable-line no-undef
         .then(resp => {
           if (resp.status === 200) {

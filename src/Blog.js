@@ -1,12 +1,11 @@
 import './Home.css'
-import { Carousel, ListGroup, Button, ButtonGroup, Jumbotron, Container, Row, Col } from 'react-bootstrap'
+import { ListGroup, Button, ButtonGroup, Jumbotron, Container, Row, Col } from 'react-bootstrap'
 import React from 'react'
 import Live from './Live.js'
 import MainNav from './MainNav.js'
 import Footer from './Footer.js'
 import BlogForm from './BlogForm.js'
 import BlogList from './BlogList.js'
-
 
 class Blog extends React.Component {
   constructor (props) {
@@ -25,7 +24,7 @@ class Blog extends React.Component {
   }
 
   componentDidMount () {
-    console.log("getting recent blogs")
+    console.log('getting recent blogs')
     fetch('/resources/blog/recent') // eslint-disable-line no-undef
       .then((resp) => {
         return resp.json()
@@ -33,12 +32,12 @@ class Blog extends React.Component {
       .then((data) => {
         this.setState({ blogs: data, isLoading: false })
       })
-    console.log("verifying token")
+    console.log('verifying token')
     fetch('/resources/verifyToken') // eslint-disable-line no-undef
       .then((resp) => {
         if (resp.status === 200) this.setState({ loggedIn: true })
       })
-    console.log("geting blog tags")
+    console.log('geting blog tags')
     fetch('/resources/blog/tags') // eslint-disable-line no-undef
       .then((resp) => resp.json())
       .then((myJson) => {
@@ -53,10 +52,10 @@ class Blog extends React.Component {
     else {
       const items = []
       const tags = this.state.tags.map((obj) => (
-        <Button variant="link"
-          style={{textAlign: 'center'}}
-          onClick={() => this.setState({tagDetail: true, tag:obj[1], showTagModal: true})}
-        >{obj[2]+" ("+obj[0]+")"}</Button>
+        <Button variant='link'
+          style={{ textAlign: 'center' }}
+          onClick={() => this.setState({ tagDetail: true, tag: obj[1], showTagModal: true })}
+        >{obj[2] + ' (' + obj[0] + ')'}</Button>
       ))
       for (const [index, value] of this.state.blogs.entries()) { // eslint-disable-line no-unused-vars
         items.push(
@@ -97,9 +96,9 @@ class Blog extends React.Component {
             <Jumbotron style={{ left: '15%', width: '70%', position: 'relative' }}>
               <Container>
                 {this.state.loggedIn && <Row><Col md={2}><Button variant='primary' onClick={() => this.setState({ blogs: this.state.blogs, isLoading: this.state.isLoading, showModal: true })}>Add Blog</Button></Col></Row>}
-                <Row style={{marginBottom: '10px'}}>
-                  <Col md={{span: 6,offset:3}}>
-                    <h4 style={{textAlign: 'center'}}>View Recent Blogs: </h4>
+                <Row style={{ marginBottom: '10px' }}>
+                  <Col md={{ span: 6, offset: 3 }}>
+                    <h4 style={{ textAlign: 'center' }}>View Recent Blogs: </h4>
                   </Col>
                 </Row>
                 <Row>
@@ -108,15 +107,14 @@ class Blog extends React.Component {
                       {items}
                     </ListGroup>
                   </Col>
-                  <Col md={{span: 2}} style={{textAlign: 'center'}}>
-                    <h5 style={{textAlign: 'center'}}> Or, browse by blog tag:</h5>
+                  <Col md={{ span: 2 }} style={{ textAlign: 'center' }}>
+                    <h5 style={{ textAlign: 'center' }}> Or, browse by blog tag:</h5>
                     <ButtonGroup vertical>
                       {tags}
                     </ButtonGroup>
                   </Col>
                 </Row>
-                <Row>
-                </Row>
+                <Row />
               </Container>
             </Jumbotron>
             <Footer />

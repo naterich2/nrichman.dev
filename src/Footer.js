@@ -9,7 +9,7 @@ library.add(fab)
 const social = [['linkedin', 'https://www.linkedin.com/in/nathan-richman-b95453124/'], ['github', 'https://github.com/nrichman2'], ['git-square', 'https://git.nrichman.dev/nrichman']]
 const logos = social.map(([icon, link], idx) => {
   return (
-    <a href={link} key={'icon-' + idx} style={{ flexGrow: '1', textAlign:'center' }}><FontAwesomeIcon style={{
+    <a href={link} key={'icon-' + idx} style={{ flexGrow: '1', textAlign: 'center' }}><FontAwesomeIcon style={{
       verticalAlign: 'middle',
       padingLeft: '2px',
       paddingRight: '2px',
@@ -25,11 +25,11 @@ function Footer () {
       <Container style={{ width: '40%' }}>
         <Row>
           <Col md={{ span: 4, offset: 4 }}>
-            <h5 style={{ textAlign: 'center' }}><a href="mailto:nate@nrichman.dev">Nate Richman</a></h5>
+            <h5 style={{ textAlign: 'center' }}><a href='mailto:nate@nrichman.dev'>Nate Richman</a></h5>
           </Col>
         </Row>
         <Row>
-          <Col md={{ span: 6, offset: 3 }} style={{ align: 'center', display: 'flex'}}>
+          <Col md={{ span: 6, offset: 3 }} style={{ align: 'center', display: 'flex' }}>
             {logos}
           </Col>
         </Row>

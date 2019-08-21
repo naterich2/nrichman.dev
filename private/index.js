@@ -122,7 +122,7 @@ app.get('/resources/blog/blog/:id', (req, res) => {
     port: 3306
   })
     .then(conn => {
-      if(req.params.id){
+      if (req.params.id) {
         conn.query('SELECT * FROM posts WHERE ID=' + req.params.id + ';')
           .then(rows => {
             res.setHeader('Content-Type', 'application/json')
@@ -135,7 +135,7 @@ app.get('/resources/blog/blog/:id', (req, res) => {
             conn.end()
           })
       } else {
-        log(req.url+" no ID parameter supplied")
+        log(req.url + ' no ID parameter supplied')
       }
     })
     .catch(err => {
@@ -264,13 +264,13 @@ app.get('/resources/blog/authors', (req, res) => {
     })
 })
 app.get('/resources/resume/:file', (req, res) => {
-  let myPath = path.join(__dirname, '/resume/'+req.params.file)
-  fs.stat(myPath, (err, stats)=> {
-    if(err) {
-      log('Request for file: '+req.params.file+" , file not found, sending 404")
+  const myPath = path.join(__dirname, '/resume/' + req.params.file)
+  fs.stat(myPath, (err, stats) => {
+    if (err) {
+      log('Request for file: ' + req.params.file + ' , file not found, sending 404')
       res.sendStatus(404)
     } else {
-      res.setHeader('Content-Type', mime.getType(myPath)
+      res.setHeader('Content-Type', mime.getType(myPath))
       res.sendFile(myPath)
     }
   })

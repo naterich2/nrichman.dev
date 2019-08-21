@@ -13,7 +13,7 @@ class BlogList extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     fetch('/resources/blog/tag/' + this.props.tagID) // eslint-disable-line no-undef
       .then(resp => {
         return resp.json()
@@ -22,8 +22,9 @@ class BlogList extends React.Component {
         this.setState({ blogs: blog })
       })
   }
-  componentDidUpdate(prevProps,prevState){
-    if(this.props.tagID !== prevProps.tagID){ // Tag ID changed
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.props.tagID !== prevProps.tagID) { // Tag ID changed
       fetch('/resources/blog/tag/' + this.props.tagID) // eslint-disable-line no-undef
         .then(resp => {
           return resp.json()
@@ -58,7 +59,7 @@ class BlogList extends React.Component {
             </ListGroup>
           </Modal.Body>
           <Modal.Footer>
-            <Button  variant='primary' onClick={this.props.close}>Close</Button>
+            <Button variant='primary' onClick={this.props.close}>Close</Button>
           </Modal.Footer>
         </Modal>
       )
