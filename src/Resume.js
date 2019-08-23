@@ -144,7 +144,7 @@ class Resume extends React.Component {
                     <p><i>Caerus Corp./Orthocor Medical</i>, Arden Hills, MN</p>
                   </Col>
                   <Col md={{ span: 3, offset: 1 }}>
-                    <p className='date'>May 2018 - August 2018</p>
+                    <p className='date'>May 2019 - August 2019</p>
                   </Col>
                 </Row>
                 <Row>
