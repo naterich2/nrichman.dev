@@ -49,7 +49,7 @@ class BlogList extends React.Component {
         )
       })
       return (
-        <Modal show={this.props.show}>
+        <Modal size='lg' show={this.props.show}>
           <Modal.Header>
             <Modal.Title>Detail</Modal.Title>
           </Modal.Header>

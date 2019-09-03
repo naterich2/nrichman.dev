@@ -11,10 +11,16 @@ import { withRouter } from 'react-router-dom'
 
 library.add(fab)
 class Resume extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      loggedIn: false
+    }
+  }
   render () {
-    const programming = [['node-js', 'I used node to create the webserver for this website, as well is during my time in Network Services at DoIT.  Click to see my git repo!', 'https://git.nrichman.dev'],
+    const programming = [['node-js', 'I used node to create the webserver for this website, as well as during my time in Network Services at DoIT.  Click to see my git repo!', 'https://git.nrichman.dev'],
       ['python', 'I used python for my bioinformatics class as well as for csv parsing and generation at CoreBiome, I also use it to write quick scripts to help me with math homework', 'https://git.nrichman.dev'],
-      ['java', 'I used Java for intro to CS, data structures, and AI. I created a replica Minesweeper game, and attempted and failed to make an atomic orbital viewer.  Click to go to my github page to see those projects.', 'https://github.com/naterich2'],
+      ['java', 'I used Java for intro to CS, data structures, and AI. I created a replica Minesweeper game, and attempted and failed to make an atomic orbital viewer for my Senior project in High School.  Click to go to my github page to see those projects.', 'https://github.com/naterich2'],
       ['cuttlefish', 'I wrote a driver for a DHT11 temperature and humidity sensor for one of my raspberry pi\'s, and I used C to do microcontroller programming at Caerus', 'https://github.com/naterich2'],
       ['MATLAB', 'I have used MATLAB for data analysis and model fitting during my Hilldale research, and I created a program to detect different life stages in S. Cerevisiae for a computational photography class', 'https://github.com/naterich2']]
     /* eslint-disable no-return-assign */
@@ -73,7 +79,7 @@ class Resume extends React.Component {
     return (
       <div className='resume'>
         <div style={{ position: 'relative', backgroundAttachment: 'scroll', width: '100%', backgroundColor: '#282c35' }}>
-          <MainNav />
+          <MainNav onLogin={() => this.setState({loggedIn: false})}/>
           <Jumbotron style={{ backgroundAttachment: 'scroll', position: 'relative', left: '15%', width: '70%' }}>
             <Container style={{ width: '80%' }}>
               <Row>
@@ -99,7 +105,7 @@ class Resume extends React.Component {
               </Row>
               <Row>
                 <Col md={{ span: 12 }}>
-                  <p>I am an graduate student looking to contribute to biomedical research and development in a technical setting. I
+                  <p>I am a graduate student looking to contribute to biomedical research and development in a technical setting. I
       am fascinated by many areas of biomedical engineering including tissue engineering, biomechanics, biosensor development, and how computer
       science and informatics can be applied to biotechnology. I have gained experience in these fields by working as an intern at an FDA regulated class II medical device company, at a microbiome bioinformatics company, and as a network engineer in the Division of IT at UW-
       Madison.  Additionally, I have furthered my knowledge in these fields by conducting funded novel research in a mechanical engineering lab, pursuing a Masters degree in biomedical engineering, and working on projects related to computer science and electronics for fun.  I love to learn, and challenging problems inspire my curiosity. This makes me a quick learner and gives me a desire to work in a fast paced, dynamic environment.</p>
@@ -116,7 +122,7 @@ class Resume extends React.Component {
                   <p><b>Bachelor of Biomedical Engineering, emphasis in Biomaterials, Cellular/Tissue Engineering</b></p>
                   <p>Certificates in Biocore Honors, Computer Science, and Biology in Engineering</p>
                   <p><i>University of Wisconsin-Madison</i>, Madison, WI</p>
-                  <p stle={{ marginBottom: '5px' }}>&nbsp;&nbsp;&nbsp;&nbsp; Graduated with Highest Distinction</p>
+                  <p stle={{ marginBottom: '5px' }}>&nbsp;&nbsp;&nbsp;&nbsp; Graduated with Highest Distinction (Summa Cum Laude eq.)</p>
                 </Col>
                 <Col md={{ span: 2, offset: 1 }}>
                   <p className='date'>May 2019</p>
@@ -149,7 +155,7 @@ class Resume extends React.Component {
                 </Row>
                 <Row>
                   <Col style={{ marginLeft: '2%', flex: '0 0 98%', maxWidth: '98%' }}>
-                    <p>I led prototyping for a rework of an existing class II medical device, and created technical drawings and specifications to send to the device manufacturer.  Implemented customer feedback and receiving inspection automation tasks using Microsoft Visual Basic for Word and Excel.  Rewrote microcontroller code for existing medical device product line.  Worked with vendors and labs to source manufacturing materials and coordinate ASTM testing, and developed new compliance testing procedures.</p>
+                    <p>Led prototyping for a rework of an existing class II medical device, and created technical drawings and specifications to send to the device manufacturer.  Implemented customer feedback and receiving inspection automation tasks using Microsoft Visual Basic for Word and Excel.  Rewrote microcontroller code for existing medical device product line.  Worked with vendors and labs to source manufacturing materials and coordinate ASTM testing, and developed new compliance testing procedures.</p>
                   </Col>
                 </Row>
               </div>
@@ -165,7 +171,7 @@ class Resume extends React.Component {
                 </Row>
                 <Row>
                   <Col style={{ marginLeft: '2%', flex: '0 0 98%', maxWidth: '98%' }}>
-                    <p>I Designed and implemented a system to deploy and maintain hundreds of raspberry pi agents to be used as user network monitoring endpoints.  Gained experience with Infoblox DDI and Cisco switching and routing to create a PXE boot network.  Used Ansible, as well as python and bash scripts for management and automation.  Gained additional experience using NodeJS and MySQL to adapt new production software to existing systems. </p>
+                    <p>Designed and implemented a system to deploy and maintain hundreds of raspberry pi agents to be used as user network monitoring endpoints.  Gained experience with Infoblox DDI and Cisco switching and routing to create a PXE boot network.  Used Ansible, as well as python and bash scripts for management and automation.  Gained additional experience using NodeJS and MySQL to adapt new production software to existing systems. </p>
                   </Col>
                 </Row>
               </div>
@@ -181,7 +187,7 @@ class Resume extends React.Component {
                 </Row>
                 <Row>
                   <Col style={{ marginLeft: '2%', flex: '0 0 98%', maxWidth: '98%' }}>
-                    <p>I lead development on a small team working to create a secure customer web portal using NodeJS, Meteor, React,
+                    <p>Lead development on a small team working to create a secure customer web portal using NodeJS, Meteor, React,
       d3, Docker, python, and NGINX.  Contributed to wet lab processes by helping with qPCR, DNA
       extraction and library preparation for Illumina sequencing.  Learned about and gained experience using lab
       techniques for high throughput DNA processing and sequencing.</p>

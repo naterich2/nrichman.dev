@@ -27,6 +27,7 @@ class MainNav extends React.Component {
             loggedIn: true,
             user: myjson.username
           })
+          this.props.onLogin()
         }
       })
   }
@@ -45,6 +46,7 @@ class MainNav extends React.Component {
               showModal: this.state.showModal,
               user: myjson.username
             })
+            this.props.onLogin()
           }
         })
     }

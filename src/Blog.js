@@ -46,6 +46,14 @@ class Blog extends React.Component {
         })
       })
   }
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.loggedIn === false){ //User logged in, update state to show add blog button
+      fetch('/resources/verifyToken') // eslint-disable-line no-undef
+        .then((resp) => {
+          if (resp.status === 200) this.setState({ loggedIn: true })
+        })
+    }
+  }
 
   render () {
     if (this.state.isLoading) return (<></>)
@@ -92,7 +100,7 @@ class Blog extends React.Component {
           <BlogForm close={onClose.bind(this)} show={this.state.showModal} />
           <BlogList tagID={this.state.tag} close={closeTagModal.bind(this)} show={this.state.showTagModal} />}
           <div style={{ position: 'absolute', backgroundAttachment: 'scroll', top: '70%', width: '100%', backgroundColor: '#282c35' }}>
-            <MainNav />
+            <MainNav onLogin={() => this.setState({loggedIn: true})}/>
             <Jumbotron style={{ left: '15%', width: '70%', position: 'relative' }}>
               <Container>
                 {this.state.loggedIn && <Row><Col md={2}><Button variant='primary' onClick={() => this.setState({ blogs: this.state.blogs, isLoading: this.state.isLoading, showModal: true })}>Add Blog</Button></Col></Row>}
