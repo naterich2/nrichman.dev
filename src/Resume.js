@@ -269,7 +269,7 @@ class Resume extends React.Component {
               </Row>
               <Row>
                 <Col md={{ span: 8 }}>
-                  <h4><b>Achievments</b></h4>
+                  <h4><b>Achievements</b></h4>
                 </Col>
                 <hr width='100%' />
               </Row>
