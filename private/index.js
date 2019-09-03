@@ -31,7 +31,7 @@ const logIn = async function (username, password, res) {
   let conn
   try {
     const conn = await maria.createConnection({
-      host: '172.17.0.1',
+      host: config.mariadb_ip,
       user: 'mysql',
       password: config.mariadb_password,
       database: 'blog',
@@ -57,7 +57,7 @@ const addBlog = async function (token, res, title, synopsis, beginning, tags, fu
   try {
     const authorized = await jwt.verify(token, config.secret)
     const conn = await maria.createConnection({
-      host: '172.17.0.1',
+      host: config.mariadb_ip,
       user: 'mysql',
       password: config.mariadb_password,
       database: 'blog',
@@ -86,7 +86,7 @@ const addTags = async function (id, tagsRaw) {
   const tags = tagsRaw.split(',').map(e => e.trim())
   try {
     const conn = await maria.createConnection({
-      host: '172.17.0.1',
+      host: config.mariadb_ip,
       user: 'mysql',
       password: config.mariadb_password,
       database: 'blog',
@@ -115,7 +115,7 @@ const addTags = async function (id, tagsRaw) {
 }
 app.get('/resources/blog/blog/:id', (req, res) => {
   maria.createConnection({
-    host: '172.17.0.1',
+    host: config.mariadb_ip,
     user: 'mysql',
     password: config.mariadb_password,
     database: 'blog',
@@ -144,7 +144,7 @@ app.get('/resources/blog/blog/:id', (req, res) => {
 })
 app.get('/resources/blog/recent', (req, res) => {
   maria.createConnection({
-    host: '172.17.0.1',
+    host: config.mariadb_ip,
     user: 'mysql',
     database: 'blog',
     password: config.mariadb_password,
@@ -169,7 +169,7 @@ app.get('/resources/blog/recent', (req, res) => {
 })
 app.get('/resources/blog/tag/:tag', (req, res) => {
   maria.createConnection({
-    host: '172.17.0.1',
+    host: config.mariadb_ip,
     user: 'mysql',
     password: config.mariadb_password,
     database: 'blog',
@@ -196,7 +196,7 @@ app.get('/resources/blog/tag/:tag', (req, res) => {
 })
 app.get('/resources/blog/tags', (req, res) => {
   maria.createConnection({
-    host: '172.17.0.1',
+    host: config.mariadb_ip,
     user: 'mysql',
     password: config.mariadb_password,
     database: 'blog',
@@ -219,7 +219,7 @@ app.get('/resources/blog/tags', (req, res) => {
 })
 app.get('/resources/blog/author/:authorID', (req, res) => {
   maria.createConnection({
-    host: '172.17.0.1',
+    host: config.mariadb_ip,
     user: 'mysql',
     password: config.mariadb_password,
     database: 'blog',
@@ -242,7 +242,7 @@ app.get('/resources/blog/author/:authorID', (req, res) => {
 })
 app.get('/resources/blog/authors', (req, res) => {
   maria.createConnection({
-    host: '172.17.0.1',
+    host: config.mariadb_ip,
     user: 'mysql',
     password: config.mariadb_password,
     database: 'blog',
